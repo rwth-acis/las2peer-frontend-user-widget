@@ -11,20 +11,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>comment-thread-widget Demo</title>
+     <!-- import jQuery for AJAX calls (must) -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../iron-component-page/iron-component-page.html">
-
-</head>
+  <!-- import Bootstrap for responsive UI (must) -->
+  <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <link rel="import" href="../user-widget.html">
+  </head>
 <body unresolved>
   <!-- Note: if the main element for this repository doesn't
        match the folder name, add a src="&lt;main-component&gt;.html" attribute,
        where &lt;main-component&gt;.html" is a file that imports all of the
        components you want documented. -->
-  <iron-component-page></iron-component-page>
+       <h1><code>&lt;User-widget&gt;</code> Demo</h1>
+
+ <div style="margin:15px;width:150px;"><div style="float:right"><p>Alice</p><div id="user-information" style="width:76px;height:55px"><user-widget login-name="alice" login-password="pwalice"></user-widget></div></div></div>
 
 </body>
 </html>
