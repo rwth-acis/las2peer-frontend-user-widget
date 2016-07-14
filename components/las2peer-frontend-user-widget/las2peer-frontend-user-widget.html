@@ -1,4 +1,3 @@
-e
 <link rel="import" href="../polymer/polymer.html">
 
 
@@ -25,7 +24,8 @@ e
 <link rel="import" href="../iron-list/iron-list.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
-  
+<link rel="import" href="../las2peer-fileupload/las2peer-fileupload.html">
+
 
 <!--
 Shows the comments contained in the thread and allows interaction if permission
@@ -39,7 +39,7 @@ Example:
 @demo demo/index.html
 -->
 
-<dom-module id="user-widget">
+<dom-module id="las2peer-user-widget">
   <template>
   <iron-ajax id="ajaxUserinformation"
                    url = '[[baseUrl]]/contacts/user'
@@ -235,13 +235,13 @@ Example:
         }
 
         paper-toggle-button.green {
-	    --paper-toggle-button-checked-bar-color:  var(--paper-green-500);
-	    --paper-toggle-button-checked-button-color:  var(--paper-green-500);
-	    --paper-toggle-button-checked-ink-color: var(--paper-green-500);
-	    --paper-toggle-button-unchecked-bar-color:  var(--paper-red-500);
-	    --paper-toggle-button-unchecked-button-color:  var(--paper-red-500);
-	    --paper-toggle-button-unchecked-ink-color: var(--paper-red-500);
-	  }
+      --paper-toggle-button-checked-bar-color:  var(--paper-green-500);
+      --paper-toggle-button-checked-button-color:  var(--paper-green-500);
+      --paper-toggle-button-checked-ink-color: var(--paper-green-500);
+      --paper-toggle-button-unchecked-bar-color:  var(--paper-red-500);
+      --paper-toggle-button-unchecked-button-color:  var(--paper-red-500);
+      --paper-toggle-button-unchecked-ink-color: var(--paper-red-500);
+    }
 
         a {
       display: block;
@@ -367,64 +367,89 @@ Example:
           @apply(--layout-flex);
         }
 
-        	paper-button.green {
-	    background-color: var(--paper-green-500);
-	    color: white;
-	  }
+          paper-button.green {
+      background-color: var(--paper-green-500);
+      color: white;
+    }
 
-	paper-icon-button.red {
-	    background-color: var(--paper-red-500);
-	    color: white;
-	    height:32px;
-	    width:32px;
-	    border-radius: 50% 50%;
-	  }
+  paper-icon-button.red {
+      background-color: var(--paper-red-500);
+      color: white;
+      height:32px;
+      width:32px;
+      border-radius: 50% 50%;
+    }
 
     </style>
     <x-select id="dropdown" horizontal-align="right" vertical-align="top" no-overlap="true" vertical-offset="10">  
           <button class="dropdown-trigger" id="dropdown-button"></button>
-			<template is="dom-if" if="{{loggedIn}}">
+      <template is="dom-if" if="{{loggedIn}}">
           <ul class="dropdown-content" tabindex="0">
               <li><a href="javascript:void(0)" on-click="_editProfile">Edit profile</a></li>
               <li><a href="javascript:void(0)" on-click="_editRights">Change privacy</a></li>
               <li><a href="javascript:void(0)" on-click="_editContacts">Manage Contacts</a></li>
               <li><a href="javascript:void(0)" on-click="_editGroups">Manage Groups</a></li>
-	</template>
+  </template>
           </ul>
         </x-select>
         <paper-dialog id="editUser" modal on-iron-overlay-closed="editUserFunction" style="width:400px" >
         <p><h4>User Information</h4></p>
       <p>First name:  <paper-input id="firstName" label="first name" no-label-float value="{{firstName}}"></paper-input></p>
       <p>Last name: <paper-input id="lastName" label="last name" no-label-float value="{{lastName}}"></paper-input></p>
-      <p>User image: <paper-input id="userImage" label="user image" width="250px" no-label-float value="{{userImage}}"></paper-input></p>
+      <p><div style="width:50%;margin:auto"> 
+            <table>
+              <tr>
+                <td>
+                    <div class="avatar" id="preview"></div>
+                </td>
+                <td>
+                  <las2peer-fileupload id="fileupload" response="function(){alert()}"></las2peer-fileupload>
+                </td>
+              </tr>
+            </table>
+            
+            </div>
+      <div  style="display:none">User image: <paper-input id="userImage" label="user image" width="50px" no-label-float value="{{userImage}}"></paper-input></div></p>
       <div class="buttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
         <paper-button dialog-confirm autofocus>Save</paper-button>
       </div>
     </paper-dialog>
+    <script>
+        /*alert("test");
+          document.getElementById("fileupload").response = function(e,detail){
+            console.log(e.detail.response);
+            document.getElementById("preview").style.backgroundImage = "url('"+e.detail.response+"')";
+            document.getElementById("userImage").value = e.detail.response;
+          }
+          console.log("test");
+          console.log(document.getElementById("fileupload").response);
+          document.getElementById("fileupload").name= Math.random().toString(36).substring(7);
+          */
+  </script>
 
     <paper-dialog id="editRights" modal style="width:400px" >
         <p><h4>Privacy</h4></p>
         <p>
         <table width="300px" style="border-collapse:separate; border-spacing:1em;">
-	        <tr>
-	        	<td>First name:</td>
-	        	<td>Private</td>
-	        	<td><paper-toggle-button id="firstNamePermission" on-click="changePermission" noink class="green"></paper-toggle-button></td>
-	        	<td>Public</td>
-	        </tr>
-	        <tr>
-	        	<td>Last name:</td>
-	        	<td>Private</td>
-	        	<td><paper-toggle-button id="lastNamePermission" on-click="changePermission" noink class="green"></paper-toggle-button></td>
-	        	<td>Public</td>
-	        </tr>
-	        <tr>
-	        	<td>User image:</td>
-	        	<td>Private</td>
-	        	<td><paper-toggle-button id="userImagePermission" on-click="changePermission" noink class="green"></paper-toggle-button></td>
-	        	<td>Public</td>
-	        </tr>
+          <tr>
+            <td>First name:</td>
+            <td>Private</td>
+            <td><paper-toggle-button id="firstNamePermission" on-click="changePermission" noink class="green"></paper-toggle-button></td>
+            <td>Public</td>
+          </tr>
+          <tr>
+            <td>Last name:</td>
+            <td>Private</td>
+            <td><paper-toggle-button id="lastNamePermission" on-click="changePermission" noink class="green"></paper-toggle-button></td>
+            <td>Public</td>
+          </tr>
+          <tr>
+            <td>User image:</td>
+            <td>Private</td>
+            <td><paper-toggle-button id="userImagePermission" on-click="changePermission" noink class="green"></paper-toggle-button></td>
+            <td>Public</td>
+          </tr>
         </table>
 
         </p>
@@ -440,22 +465,22 @@ Example:
         <p>
         <table>
         <tr>
-       	<td><paper-input id="addContactName" label="Contact name" no-label-float ></paper-input></td>
-       	<td><paper-button raised on-click="addContact" class="green"><iron-icon icon="add"></iron-icon>Add</paper-button></td>
+        <td><paper-input id="addContactName" label="Contact name" no-label-float ></paper-input></td>
+        <td><paper-button raised on-click="addContact" class="green"><iron-icon icon="add"></iron-icon>Add</paper-button></td>
         </tr>
         </table>
 
         <p>
         <paper-dialog-scrollable>
         <div id="userContacts">
-        	<iron-list id='itemsList' items='[[contacts]]' selection-enabled multi-selection style='overflow-y:scroll; max-height:200px'>
-        		<template>
-        			<div style='padding:5px;display:inline;'><div  id="img[[item]]" class="avatar" ></div>
-        				<div style='margin-left:5px; position:relative; top:8px;display:inline;'>[[item]]</div>
-        				<div style='float:right'><paper-icon-button class="red" icon="remove" on-click='removeContact' id="[[item]]"></paper-icon-button></div>
-        			</div>
-        		</template>
-        	</iron-list>
+          <iron-list id='itemsList' items='[[contacts]]' selection-enabled multi-selection style='overflow-y:scroll; max-height:200px'>
+            <template>
+              <div style='padding:5px;display:inline;'><div  id="img[[item]]" class="avatar" ></div>
+                <div style='margin-left:5px; position:relative; top:8px;display:inline;'>[[item]]</div>
+                <div style='float:right'><paper-icon-button class="red" icon="remove" on-click='removeContact' id="[[item]]"></paper-icon-button></div>
+              </div>
+            </template>
+          </iron-list>
         </div>
         </paper-dialog-scrollable>
           </p>
@@ -530,7 +555,7 @@ Example:
   </template>
   <script>
     Polymer({
-      is: 'user-widget',
+      is: 'las2peer-user-widget',
       properties: {
           _baseUrl:  {
             type: String,
@@ -608,8 +633,8 @@ Example:
           },
 
           contacts:{
-          	type: Object,
-          	value:[]
+            type: Object,
+            value:[]
           },
 
           contactsCanAdd:{
@@ -639,7 +664,7 @@ Example:
 
           loggedIn:{
             type: Boolean,
-			computed: '_computeLogin(loginName,loginPassword,loginOidcToken,loginOidcProvider)'
+      computed: '_computeLogin(loginName,loginPassword,loginOidcToken,loginOidcProvider)'
           },
           _requestHeaders: {
             type: Object,
@@ -735,8 +760,8 @@ Example:
 
         return headers;
       },
-	  
-	  _computeLogin: function(loginName,loginPassword,loginOidcToken,loginOidcProvider) {
+    
+    _computeLogin: function(loginName,loginPassword,loginOidcToken,loginOidcProvider) {
         if (loginName != null && loginPassword != null) {
           return true;
         }
@@ -747,11 +772,11 @@ Example:
       },
 
       ready: function(){
-		if(this.loggedIn){
+    if(this.loggedIn){
           this.$.ajaxUserinformation.generateRequest();
           this.$.ajaxGetContacts.generateRequest();
           this.$.ajaxGetGroups.generateRequest();
-		}
+    }
 
       },
 
@@ -783,9 +808,9 @@ Example:
       },
 
       removeContact : function(event, detail){
-      	console.log("Removing " + event.path[1].id + " from your contact list");
-      	this.contactToRemove = event.path[1].id + "";
-      	this.$.ajaxRemoveContact.generateRequest();
+        console.log("Removing " + event.path[1].id + " from your contact list");
+        this.contactToRemove = event.path[1].id + "";
+        this.$.ajaxRemoveContact.generateRequest();
 
       },
 
@@ -797,10 +822,10 @@ Example:
 
 
       contactAdded(event){
-      	this.addUser('contacts',this.contactToAdd);
+        this.addUser('contacts',this.contactToAdd);
             this.contact = this.contactToAdd;
             this.$.ajaxContactInformation.generateRequest();
-      	this.contacts.sort(function(a, b) {
+        this.contacts.sort(function(a, b) {
               if (a.toLowerCase() < b.toLowerCase()) return -1;
               if (a.toLowerCase() > b.toLowerCase()) return 1;
               return 0;
@@ -818,8 +843,8 @@ Example:
       },
 
       contactRemoved(event){
-      	this.removeUser('contacts',this.contactToRemove);
-      	this.contacts.sort(function(a, b) {
+        this.removeUser('contacts',this.contactToRemove);
+        this.contacts.sort(function(a, b) {
               if (a.toLowerCase() < b.toLowerCase()) return -1;
               if (a.toLowerCase() > b.toLowerCase()) return 1;
               return 0;
@@ -913,7 +938,7 @@ Example:
         var userliste = event.target.lastResponse.users;
         this.contacts = [];
         for (user in userliste) {
-        	this.addUser('contacts',userliste[user]);
+          this.addUser('contacts',userliste[user]);
             this.contact = userliste[user];
             this.$.ajaxContactInformation.generateRequest();
         }
@@ -936,6 +961,7 @@ Example:
         document.getElementById('lastName').setAttribute('value',lastName);
         document.getElementById('userImage').setAttribute('value',userImage);
         $('#dropdown-button').css("background-image", "url("+ userImage +")");  
+        document.querySelector("#preview").style.backgroundImage = "url('"+userImage+"')";
        console.log(firstName + " " + lastName + ", " + userImage);
       },
 
@@ -961,6 +987,161 @@ Example:
           document.getElementById('userImagePermission').setAttribute('checked',this.userImagePermission);
         } 
       },
+
+      _handleError(event) {
+        //alert(event.target.lastResponse);
+        console.log(event._);
+      },
+
+      _isNull(val) {
+        return val == null;
+      }
+    });
+  </script>
+</dom-module>
+
+
+<dom-module id="las2peer-userlist-widget">
+    <template>
+      <iron-ajax id="ajaxGetContacts"
+                   url = '[[baseUrl]]/contacts/contacts'
+                   params='{}'
+                   handle-as="json"
+                   on-response="_updateContactList"
+                   on-error="_handleError"
+                   headers = '[[_requestHeaders]]'>
+    </iron-ajax>
+
+      <select class="form-control" on-change="changeValue" id="contactlist" style="width:150px">
+          <template is="dom-repeat" items="[[contacts]]">
+            <option value="{{item}}">{{item}}</option>
+          </template>
+      </select>
+
+    </template>
+<script>
+    Polymer({
+      is: 'las2peer-userlist-widget',
+      properties: {
+          _baseUrl:  {
+            type: String,
+            computed: '_computeBaseURL(baseUrl)'
+          },
+          data: Object,
+          item: Object,
+
+          name: String,
+
+          baseUrl: {
+              type: String,
+              value: 'https://steen.informatik.rwth-aachen.de:9080',
+          },
+
+          loginName: {
+            type: String,
+            value: null
+          },
+          loginPassword: {
+            type: String,
+            value: null
+          },
+
+          loginOidcToken: {
+            type: String,
+            value: null
+          },
+          loginOidcProvider: {
+            type: String,
+            value: null
+          },
+
+          contacts:{
+            type: Object,
+            value:[]
+          },
+
+          value:{
+            type: String
+          },
+
+          loggedIn:{
+            type: Boolean,
+            computed: '_computeLogin(loginName,loginPassword,loginOidcToken,loginOidcProvider)'
+          },
+         
+          _requestHeaders: {
+            type: Object,
+            computed: '_computeHeaders(loginName,loginPassword,loginOidcToken,loginOidcProvider)'
+          }
+      },
+
+      addUser: function(list,user) {
+        this.push(list, user);
+      },
+
+      changeValue(){
+        this.value = document.getElementById('contactlist').value;
+      },
+
+      handleResponse : function(e, detail){
+        console.log(this.response)
+        this.response.apply(this,arguments);
+      },
+
+      _computeBaseURL: function(base) {
+        return base + "comments";
+      },
+      _computeHeaders: function(loginName,loginPassword,loginOidcToken,loginOidcProvider) {
+        var headers = {};
+
+        if (loginName != null && loginPassword != null) {
+          headers["Authorization"] = "Basic " + btoa(loginName + ":" + loginPassword);
+        }
+        else if(loginOidcToken != null) {
+          headers["access_token"] = loginOidcToken;
+
+          if (loginOidcProvider != null) {
+            headers["oidc_provider"] = loginOidcProvider;
+          }
+        }
+
+        return headers;
+      },
+    
+    _computeLogin: function(loginName,loginPassword,loginOidcToken,loginOidcProvider) {
+        if (loginName != null && loginPassword != null) {
+          return true;
+        }
+        else if(loginOidcToken != null && loginOidcProvider != null && loginOidcToken != "undefined") {
+            return true;
+        }
+        return false;
+      },
+
+      ready: function(){
+    if(this.loggedIn){
+          this.$.ajaxGetContacts.generateRequest();
+    }
+
+      },
+
+      _updateContactList(event){
+        var userliste = event.target.lastResponse.users;
+        this.contacts = [];
+        for (user in userliste) {
+          this.addUser('contacts',userliste[user]);
+        }
+        if(this.contacts.length>0){
+          this.value = this.contacts[0];
+        }
+        this.contacts.sort(function(a, b) {
+          if (a.toLowerCase() < b.toLowerCase()) return -1;
+          if (a.toLowerCase() > b.toLowerCase()) return 1;
+          return 0;
+        });
+      },
+
+      
 
       _handleError(event) {
         //alert(event.target.lastResponse);
