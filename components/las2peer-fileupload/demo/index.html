@@ -13,23 +13,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>las2peer-frontend-user-widget Demo</title>
+    <title>las2peer File Service Upload Widget</title>
      <!-- import jQuery for AJAX calls (must) -->
-       <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 
   <!-- import Bootstrap for responsive UI (must) -->
   <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <link rel="import" href="../las2peer-frontend-user-widget.html">
+    <link rel="import" href="../las2peer-fileupload.html">
   </head>
 <body unresolved>
   <!-- Note: if the main element for this repository doesn't
        match the folder name, add a src="&lt;main-component&gt;.html" attribute,
        where &lt;main-component&gt;.html" is a file that imports all of the
        components you want documented. -->
-       <h1><code>&lt;User-widget&gt;</code> Demo</h1>
+       <h1><code>&lt;las2peer-fileupload&gt;</code> Demo</h1>
 
- <div style="margin:15px;width:150px;"><div style="float:right"><p>Alice</p><div id="user-information" style="width:76px;height:55px"><las2peer-user-widget login-name="alice" login-password="pwalice"></las2peer-user-widget></div></div></div>
+<las2peer-fileupload baseUrl="test" id="fileupload"></las2peer-fileupload>
+<script>
+    document.querySelector("#fileupload").response = function(){
+      alert("test");
+    }
+
+  </script>
 
 </body>
 </html>
