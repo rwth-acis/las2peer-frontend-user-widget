@@ -88,12 +88,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         box-sizing: border-box;
       }
 
+      .sizer {
+        width: 9999px;
+        height: 9999px;
+      }
+
     </style>
 
   </head>
   <body>
 
     <div class="constrain"></div>
+
+    <test-fixture id="basic">
+      <template>
+        <test-fit>
+          Basic
+        </test-fit>
+      </template>
+    </test-fixture>
 
     <test-fixture id="absolute">
       <template>
@@ -170,6 +183,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </test-fixture>
 
+    <test-fixture id="scrollable">
+      <template>
+        <test-fit auto-fit-on-attach class="scrolling">
+          scrollable
+          <div class="sizer"></div>
+        </test-fit>
+      </template>
+    </test-fixture>
+
     <template id="ipsum">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </template>
@@ -187,6 +209,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       function intersects(r1, r2) {
         return !(r2.left >= r1.right || r2.right <= r1.left || r2.top >= r1.bottom || r2.bottom <= r1.top);
       }
+
+      suite('basic', function() {
+
+        var el;
+        setup(function() {
+          el = fixture('basic');
+        });
+
+        test('position() works without autoFitOnAttach', function() {
+          el.verticalAlign = 'top';
+          el.horizontalAlign = 'left';
+          el.position();
+          var rect = el.getBoundingClientRect();
+          assert.equal(rect.top, 0, 'top ok');
+          assert.equal(rect.left, 0, 'left ok');
+        });
+
+        test('constrain() works without autoFitOnAttach', function() {
+          el.constrain();
+          var style = getComputedStyle(el);
+          assert.equal(style.maxWidth, window.innerWidth + 'px', 'maxWidth ok');
+          assert.equal(style.maxHeight, window.innerHeight + 'px', 'maxHeight ok');
+        });
+
+        test('center() works without autoFitOnAttach', function() {
+          el.center();
+          var rect = el.getBoundingClientRect();
+          assert.closeTo(rect.left - (window.innerWidth - rect.right), 0, 5, 'centered horizontally');
+          assert.closeTo(rect.top - (window.innerHeight - rect.bottom), 0, 5, 'centered vertically');
+        });
+
+      });
 
       suite('manual positioning', function() {
 
@@ -360,6 +414,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           el.refit();
           var rect = el.getBoundingClientRect();
           assert.isTrue(rect.height <= window.innerHeight, 'height is less than or equal to viewport height');
+        });
+
+        test('scrolling sizingTarget preserves scrolling position', function() {
+          el = fixture('scrollable');
+          el.scrollTop = 20;
+          el.scrollLeft = 20;
+          el.refit();
+          assert.equal(el.scrollTop, 20, 'scrollTop ok');
+          assert.equal(el.scrollLeft, 20, 'scrollLeft ok');
         });
 
       });
@@ -826,6 +889,55 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var rect = el.getBoundingClientRect();
             assert.equal(rect.width, elRect.width, 'no cropping');
             assert.isFalse(intersects(rect, parentRect), 'no overlap');
+          });
+        });
+
+        suite('prefer horizontal overlap to vertical overlap', function() {
+          setup(function() {
+            el.noOverlap = true;
+            el.dynamicAlign = true;
+            // Make space around the positionTarget.
+            parent.style.top = elRect.height + 'px';
+            parent.style.left = elRect.width + 'px';
+            parent.style.width = '10px';
+            parent.style.height = '10px';
+            parentRect = parent.getBoundingClientRect();
+          });
+
+          test('top-left aligns to target bottom-left', function() {
+            el.verticalAlign = 'top';
+            el.horizontalAlign = 'left';
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.left, parentRect.left, 'left ok');
+            assert.equal(rect.top, parentRect.bottom, 'top ok');
+          });
+
+          test('top-right aligns to target bottom-right', function() {
+            el.verticalAlign = 'top';
+            el.horizontalAlign = 'right';
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.right, parentRect.right, 'right ok');
+            assert.equal(rect.top, parentRect.bottom, 'top ok');
+          });
+
+          test('bottom-left aligns to target top-left', function() {
+            el.verticalAlign = 'bottom';
+            el.horizontalAlign = 'left';
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.left, parentRect.left, 'left ok');
+            assert.equal(rect.bottom, parentRect.top, 'bottom ok');
+          });
+
+          test('bottom-right aligns to target top-right', function() {
+            el.verticalAlign = 'bottom';
+            el.horizontalAlign = 'right';
+            el.refit();
+            var rect = el.getBoundingClientRect();
+            assert.equal(rect.right, parentRect.right, 'right ok');
+            assert.equal(rect.bottom, parentRect.top, 'bottom ok');
           });
 
         });
