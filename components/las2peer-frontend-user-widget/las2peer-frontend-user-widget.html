@@ -1321,7 +1321,7 @@ Example:
                 document.getElementById('lastName').setAttribute('value', lastName);
                 document.getElementById('userImage').setAttribute('value', userImage);
                 if(userImage.length>0){
-                  $('#dropdown-button').css("background-image", "url('"this.baseUrl+"/fileservice/files/" + userImage + "')");
+                  $('#dropdown-button').css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')");
                   document.querySelector("#preview").style.backgroundImage = "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')";
                 }
                 console.log(firstName + " " + lastName + ", " + userImage);
