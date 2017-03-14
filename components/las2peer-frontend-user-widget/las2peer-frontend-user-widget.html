@@ -1288,9 +1288,9 @@ Example:
                 $("div[id='imgg" + currentUser + "']").css("background-image", "url(logo.png)");
                 $("div[id='imgAddr" + currentUser + "']").css("background-image", "url(logo.png)");
                 if (imgUrl.length > 1) {
-                    $("div[id='img" + currentUser + "']").css("background-image", "url('"this.baseUrl+"/fileservice/files/" + imgUrl + "')");
-                    $("div[id='imgg" + currentUser + "']").css("background-image", "url('"this.baseUrl+"/fileservice/files/" + imgUrl + "')");
-                    $("div[id='imgAddr" + currentUser + "']").css("background-image", "url('"this.baseUrl+"/fileservice/files/" + imgUrl + "')");
+                    $("div[id='img" + currentUser + "']").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + imgUrl + "')");
+                    $("div[id='imgg" + currentUser + "']").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + imgUrl + "')");
+                    $("div[id='imgAddr" + currentUser + "']").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + imgUrl + "')");
                 }
             },
 
@@ -1322,7 +1322,7 @@ Example:
                 document.getElementById('userImage').setAttribute('value', userImage);
                 if(userImage.length>0){
                   $('#dropdown-button').css("background-image", "url('"this.baseUrl+"/fileservice/files/" + userImage + "')");
-                  document.querySelector("#preview").style.backgroundImage = "url('"this.baseUrl+"/fileservice/files/" + userImage + "')";
+                  document.querySelector("#preview").style.backgroundImage = "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')";
                 }
                 console.log(firstName + " " + lastName + ", " + userImage);
             },
@@ -1367,7 +1367,7 @@ Example:
             },
 
             _updateAvatar(event){
-                            document.getElementById("preview").style.backgroundImage = "url('"this.baseUrl+"/fileservice/files/" + event.detail.response + "')";
+                            document.getElementById("preview").style.backgroundImage = "url('"+this.baseUrl+"/fileservice/files/" + event.detail.response + "')";
                             document.getElementById("userImage").value = event.detail.response;
             },
 
