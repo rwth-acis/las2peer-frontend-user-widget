@@ -62,10 +62,6 @@ Example:
         Polymer({
             is: 'las2peer-userlist-widget',
             properties: {
-                _baseUrl: {
-                    type: String,
-                    computed: '_computeBaseURL(baseUrl)'
-                },
                 data: Object,
                 item: Object,
 
@@ -126,9 +122,6 @@ Example:
                 this.response.apply(this, arguments);
             },
 
-            _computeBaseURL: function(base) {
-                return base + "comments";
-            },
             _computeHeaders: function(loginName, loginPassword, loginOidcToken, loginOidcProvider) {
                 var headers = {};
 
@@ -396,7 +389,7 @@ Example:
         </iron-ajax>
 
         <iron-ajax
-           id="ajax"
+           id="ajaxUpdateAvatar"
            url = '[[baseUrl]]/fileservice/files'
            method="POST"
            params='{}'
@@ -434,10 +427,6 @@ Example:
                 -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
             }
 
-            #dropdown{
-              z-index: 5000;
-            }
-
             .dropdown-content {
                 background-color: white;
                 line-height: 20px;
@@ -445,6 +434,7 @@ Example:
                 box-shadow: 0px 1px 1px #ccc;
                 outline: none;
                 margin-top: 42px;
+                z-index: 5000;
             }
             #dropdown-button {
                 margin-top: -5px;
@@ -608,7 +598,7 @@ Example:
                 text-decoration: none;
             }
         </style>
-        <x-select id="dropdown" horizontal-align="right" vertical-align="top" no-overlap="true" vertical-offset="10">
+        <x-select id="dropdown">
             <button class="dropdown-trigger" id="dropdown-button"></button>
             <template is="dom-if" if="{{loggedIn}}">
                 <ul class="dropdown-content" tabindex="0">
@@ -622,8 +612,8 @@ Example:
                     </li>
                     <li><a href="javascript:void(0)" on-click="_addressbook">Addressbook</a>
                     </li>
+                </ul>
             </template>
-            </ul>
         </x-select>
         <paper-toast id="errorToast" class="fit-bottom" text=""></paper-toast>
         <paper-dialog id="editUser" modal on-iron-overlay-closed="editUserFunction" style="width:400px">
@@ -642,7 +632,7 @@ Example:
                                 <div class="avatar" id="preview"></div>
                             </td>
                             <td>
-                                <input type="file" name="file" id="file" class="inputfile" on-change="setFiles" />
+                                <input type="file" name="file" id="file" class="inputfile" on-change="onChangeAvatarFile" />
                                 <paper-button raised onclick="document.getElementById('file').click()">Upload new Avatar</paper-button>
                             </td>
                         </tr>
@@ -839,10 +829,6 @@ Example:
         Polymer({
             is: 'las2peer-user-widget',
             properties: {
-                _baseUrl: {
-                    type: String,
-                    computed: '_computeBaseURL(baseUrl)'
-                },
                 data: Object,
                 baseUrl: {
                     type: String,
@@ -1049,9 +1035,6 @@ Example:
                 }
             },
 
-            _computeBaseURL: function(base) {
-                return base + "comments";
-            },
             _computeHeaders: function(loginName, loginPassword, loginOidcToken, loginOidcProvider) {
                 var headers = {};
 
@@ -1351,7 +1334,7 @@ Example:
                 }
             },
 
-            setFiles: function(e, detail, sender) {
+            onChangeAvatarFile: function(e, detail, sender) {
                 var formData = new FormData();
                 for (var i = 0, f; f = e.target.files[i]; ++i) {
                     formData.append("filecontent", f, f.name);
@@ -1359,11 +1342,11 @@ Example:
                 formData.append('identifier', 'contactPicutre'+this.name);
                 formData.append('description', 'profile picture');
 
-                this.$.ajax.body = formData;
+                this.$.ajaxUpdateAvatar.body = formData;
                 // Override default type set by core-ajax.
                 // Allow browser to set the mime multipart content type itself. 
-                this.$.ajax.contentType = null;
-                this.$.ajax.generateRequest();
+                this.$.ajaxUpdateAvatar.contentType = null;
+                this.$.ajaxUpdateAvatar.generateRequest();
             },
 
             _updateAvatar(event){
