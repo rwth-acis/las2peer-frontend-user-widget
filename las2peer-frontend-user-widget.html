@@ -395,15 +395,16 @@ Example:
           content-type='text/plain'>
         </iron-ajax>
 
-        <iron-ajax id="ajax"
-                   url = '[[baseUrl]]/fileservice/files'
-                   method="POST"
-                   params='{}'
-                   handle-as="text"
-                   on-response="_updateAvatar"
-                   on-error="_handleError"
-                   headers = '[[_requestHeaders]]'
-                   >
+        <iron-ajax
+           id="ajax"
+           url = '[[baseUrl]]/fileservice/files'
+           method="POST"
+           params='{}'
+           handle-as="text"
+           on-response="_updateAvatar"
+           on-error="_handleError"
+           headers = '[[_requestHeaders]]'
+           >
     </iron-ajax>
 
         <style is="custom-style">
@@ -1351,24 +1352,23 @@ Example:
             },
 
             setFiles: function(e, detail, sender) {
-              var formData = new FormData();
-              for (var i = 0, f; f = e.target.files[i]; ++i) {
-                formData.append("filecontent", f,
-                                f.name);
-              }
-              formData.append('identifier', 'contactPicutre'+this.name);
-              formData.append('description', 'profile picture');
+                var formData = new FormData();
+                for (var i = 0, f; f = e.target.files[i]; ++i) {
+                    formData.append("filecontent", f, f.name);
+                }
+                formData.append('identifier', 'contactPicutre'+this.name);
+                formData.append('description', 'profile picture');
 
-              this.$.ajax.body = formData;
-              // Override default type set by core-ajax.
-              // Allow browser to set the mime multipart content type itself. 
-              this.$.ajax.contentType = null;
-              this.$.ajax.generateRequest();
+                this.$.ajax.body = formData;
+                // Override default type set by core-ajax.
+                // Allow browser to set the mime multipart content type itself. 
+                this.$.ajax.contentType = null;
+                this.$.ajax.generateRequest();
             },
 
             _updateAvatar(event){
-                            document.getElementById("preview").style.backgroundImage = "url('"+this.baseUrl+"/fileservice/files/" + event.detail.response + "')";
-                            document.getElementById("userImage").value = event.detail.response;
+                document.getElementById("preview").style.backgroundImage = "url('"+this.baseUrl+"/fileservice/files/" + event.detail.response + "')";
+                document.getElementById("userImage").value = event.detail.response;
             },
 
             _handleError(event) {
