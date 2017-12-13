@@ -1349,8 +1349,12 @@ Example:
             },
 
             _updateAvatar(event){
-                document.getElementById("preview").style.backgroundImage = "url('"+this.baseUrl+"/fileservice/files/" + event.detail.response + "')";
-                document.getElementById("userImage").value = event.detail.response;
+                userImage = event.detail.response;
+                document.getElementById('userImage').setAttribute('value', userImage);
+                if(userImage.length>0){
+                  $('#dropdown-button').css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')");
+                  document.querySelector("#preview").style.backgroundImage = "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')";
+                }
             },
 
             _handleError(event) {
