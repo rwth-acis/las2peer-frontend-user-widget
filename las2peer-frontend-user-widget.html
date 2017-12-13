@@ -1312,8 +1312,7 @@ Example:
             },
 
             _updatedUserInformation(event) {
-                $('#dropdown-button').css("background-image", "url(" + userImage + ")");
-                console.log("Updated userinformation.");
+                $('#dropdown-button').css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')");
             },
 
             _updatePermission(event) {
