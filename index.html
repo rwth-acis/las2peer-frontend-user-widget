@@ -1,16 +1,35 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>las2peer-frontend-user-widget</title>
+    <title>las2peer-frontend-user-widget demo</title>
 
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 
-    <link rel="import" href="../iron-component-page/iron-component-page.html">
+  <!-- import Bootstrap for responsive UI (must) -->
+  <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <script type="module" src="./las2peer-user-widget.js"></script>
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+    </style>
   </head>
   <body>
-    <iron-component-page src="las2peer-frontend-user-widget.html"></iron-component-page>
+    <div class="vertical-section-container centered">
+      <h3>Basic las2peer-frontend-user-widget demo</h3>
+           <div style="margin:15px;width:150px;">
+            <div style="float:right">
+              <p>
+                Alice
+              </p>
+              <div id="user-information" style="width:76px;height:55px">
+                <las2peer-user-widget login-name="alice" login-password="pwalice">
+                </las2peer-user-widget>
+              </div>
+            </div>
+          </div>
+    </div>
   </body>
 </html>

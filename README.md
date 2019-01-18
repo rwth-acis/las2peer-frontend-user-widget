@@ -1,20 +1,17 @@
-# \<las2peer-frontend-user-widget\>
-
-A polymer widget which uses the las2peer Contact and UserInformation Service
-
-## Deploy
-
-1. Install the LTS version (4.x) of [Node.js](https://nodejs.org/en/download/). The current version (6.x) should work, but is not officially supported. Versions below LTS are not supported.
-2. Install [git](https://git-scm.com/downloads).
-3. Install the latest version of [Bower](https://bower.io/#install-bower).
+A polymer3.0 widget used to display and change basic user details.
+Ideally you should be able to build it by simply running
 ```
-$ npm install -g bower
+nmp i
 ```
-4. Run the following Bower command:
+and
 ```
-$ bower install rwth-acis/frontend-user-widget
+polymer serve
 ```
 
-## Demo
-
-Visit the following page for the [documentation & a demo](https://rwth-acis.github.io/las2peer-frontend-user-widget)
+## Changes from legacy polymer module
+	>Created seperate ES files for las2peer-user-widget and las2peer-userlist-widget according to legacy definition of Polymer Elements
+	>Added super.ready() to ready() function
+	>Scrapped x-select in favor of an iron-dropdown due to the x-select item not showing up in the DOM
+	>Had to lose the 'modal' property of paper-dialogs since the backdrop appeard on top of everyting, blocking the page
+	>Changed syntax from 'document.getElementById("ID") to 'this.$.ID'
+	>Outsourced triggering of click event on file input from paper-button to '_uploadAvatarFile' function
