@@ -15,3 +15,5 @@ polymer serve
 	>Had to lose the 'modal' property of paper-dialogs since the backdrop appeard on top of everyting, blocking the page
 	>Changed syntax from 'document.getElementById("ID") to 'this.$.ID'
 	>Outsourced triggering of click event on file input from paper-button to '_uploadAvatarFile' function
+	>Changed authorization for Service Requests from based on login-name + password or OIDC Token + Provider to session cookie
+		>This also makes the demo sort of obsolete
