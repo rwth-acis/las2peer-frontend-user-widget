@@ -13,7 +13,7 @@ class Las2peerUserlistWidget extends PolymerElement {
           handle-as="json"
           on-response="_updateContactList"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'>
+          with-credentials="true">
         </iron-ajax>
 
         <input list="contactlist" name="contactlist">
@@ -33,15 +33,6 @@ class Las2peerUserlistWidget extends PolymerElement {
                 type: String,
                 value: 'https://las2peer.dbis.rwth-aachen.de:9098',
             },
-            loginName: {
-                type: String,
-                value: null
-            },
-            loginPassword: {
-                type: String,
-                value: null
-            },
-
             loginOidcToken: {
                 type: String,
                 value: null
@@ -59,11 +50,7 @@ class Las2peerUserlistWidget extends PolymerElement {
             },
             loggedIn: {
                 type: Boolean,
-                computed: '_computeLogin(loginName,loginPassword,loginOidcToken,loginOidcProvider)'
-            },
-            _requestHeaders: {
-                type: Object,
-                computed: '_computeHeaders(loginName,loginPassword,loginOidcToken,loginOidcProvider)'
+                computed: '_computeLogin(loginOidcToken)'
             }
         }
     }
@@ -80,31 +67,15 @@ class Las2peerUserlistWidget extends PolymerElement {
         this.response.apply(this, arguments);
     }
 
-    _computeHeaders(loginName, loginPassword, loginOidcToken, loginOidcProvider) {
-        var headers = {};
-
-        if (loginName != null && loginPassword != null) {
-            headers["Authorization"] = "Basic " + btoa(loginName + ":" + loginPassword);
-        } else if (loginOidcToken != null) {
-            headers["access_token"] = loginOidcToken;
-
-            if (loginOidcProvider != null) {
-                headers["oidc_provider"] = loginOidcProvider;
-            }
-        }
-        return headers;
-    }
-
-    _computeLogin(loginName, loginPassword, loginOidcToken, loginOidcProvider) {
-        if (loginName != null && loginPassword != null) {
-            return true;
-        } else if (loginOidcToken != null && loginOidcProvider != null && loginOidcToken != "undefined") {
+    _computeLogin(loginOidcToken) {
+        if (loginOidcToken != null && loginOidcToken != "undefined") {
             return true;
         }
         return false;
     }
 
     ready() {
+        super.ready();
         if (this.loggedIn) {
             this.$.ajaxGetContacts.generateRequest();
         }

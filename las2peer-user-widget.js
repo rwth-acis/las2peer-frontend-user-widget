@@ -16,7 +16,6 @@ import "@polymer/paper-input/paper-textarea.js";
 import "@polymer/paper-spinner/paper-spinner.js";
 import "@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
 import "@polymer/iron-flex-layout/iron-flex-layout.js";
-import "@polymer/iron-dropdown/demo/x-select.js";
 import "@polymer/paper-item/paper-item.js";
 import "@polymer/paper-badge/paper-badge.js";
 import "@polymer/iron-list/iron-list.js";
@@ -70,7 +69,7 @@ class Las2peerUserWidget extends PolymerElement {
                 border-radius: 20px;
                 -webkit-border-radius: 20px;
                 -moz-border-radius: 20px;
-                background-image: url('logo.png');
+                background-image: url('node_modules/las2peer-frontend-user-widget/logo.png');
                 background-size: 100% 100%;
                 background-color: rgba(0, 0, 0, 0);
                 box-shadow: 0 0 8px rgba(0, 0, 0, .8);
@@ -129,7 +128,7 @@ class Las2peerUserWidget extends PolymerElement {
                 border-radius: 20px;
                 box-sizing: border-box;
                 background-color: #ddd;
-                background-image: url('logo.png');
+                background-image: url('node_modules/las2peer-frontend-user-widget/logo.png');
             }
             #itemsList,
             #selectedItemsList {
@@ -231,7 +230,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="text"
           on-response="_getUserInformation"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'>
+          with-credentials="true">
         </iron-ajax>
 
         <iron-ajax id="ajaxContactInformation" url='[[baseUrl]]/contactservice/user/[[contact]]'
@@ -239,7 +238,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="text"
           on-response="_getContactInformation"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'>
+          with-credentials="true">
         </iron-ajax>
 
         <iron-ajax
@@ -251,7 +250,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="json"
           on-response="_updatedUserInformation"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'
+          with-credentials="true"
           content-type='text/plain'>
         </iron-ajax>
 
@@ -263,7 +262,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="text"
           on-response="contactAdded"
           on-error="_contactAddError"
-          headers='[[_requestHeaders]]'>
+          with-credentials="true">
         </iron-ajax>
 
         <iron-ajax
@@ -273,7 +272,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="json"
           on-response="_updateContactList"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'>
+          with-credentials="true">
         </iron-ajax>
 
         <iron-ajax
@@ -284,7 +283,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="text"
           on-response="contactRemoved"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'
+          with-credentials="true"
           content-type='text/plain'>
         </iron-ajax>
 
@@ -295,7 +294,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="text"
           on-response="_updatePermission"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'>
+          with-credentials="true">
         </iron-ajax>
 
         <iron-ajax
@@ -307,7 +306,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="json"
           on-response="loadPermissions"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'
+          with-credentials="true"
           content-type='text/plain'>
         </iron-ajax>
 
@@ -319,7 +318,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="text"
           on-response="loadAddressbook"
           on-error="_addressbookError"
-          headers='[[_requestHeaders]]'
+          with-credentials="true"
           content-type='text/plain'>
         </iron-ajax>
 
@@ -331,7 +330,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="text"
           on-response="loadAddressbook"
           on-error="_addressbookError"
-          headers='[[_requestHeaders]]'
+          with-credentials="true"
           content-type='text/plain'>
         </iron-ajax>
 
@@ -342,7 +341,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="json"
           on-response="updateAddressbook"
           on-error="_addressbookError"
-          headers='[[_requestHeaders]]'>
+          with-credentials="true">
         </iron-ajax>
 
         <iron-ajax
@@ -352,7 +351,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="json"
           on-response="_updateGroups"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'>
+          with-credentials="true">
         </iron-ajax>
 
         <iron-ajax
@@ -362,7 +361,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="json"
           on-response="_updateGroupMemberlist"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'>
+          with-credentials="true">
         </iron-ajax>
 
         <iron-ajax
@@ -373,7 +372,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="text"
           on-response="_groupAdded"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'
+          with-credentials="true"
           content-type='text/plain'>
         </iron-ajax>
 
@@ -385,7 +384,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="text"
           on-response="_groupRemoved"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'
+          with-credentials="true"
           content-type='text/plain'>
         </iron-ajax>
 
@@ -397,7 +396,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="json"
           on-response="_memberAdded"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'
+          with-credentials="true"
           content-type='text/plain'>
         </iron-ajax>
 
@@ -409,7 +408,7 @@ class Las2peerUserWidget extends PolymerElement {
           handle-as="json"
           on-response="_memberRemoved"
           on-error="_handleError"
-          headers='[[_requestHeaders]]'
+          with-credentials="true"
           content-type='text/plain'>
         </iron-ajax>
 
@@ -421,7 +420,7 @@ class Las2peerUserWidget extends PolymerElement {
            handle-as="text"
            on-response="_updateAvatar"
            on-error="_handleError"
-           headers = '[[_requestHeaders]]'
+           with-credentials="true"
            >
         </iron-ajax>
 
@@ -662,14 +661,6 @@ class Las2peerUserWidget extends PolymerElement {
                 type: Boolean,
                 value: false
             },
-            loginName: {
-                type: String,
-                value: null
-            },
-            loginPassword: {
-                type: String,
-                value: null
-            },
             firstName: {
                 type: String,
                 notify: true,
@@ -706,7 +697,7 @@ class Las2peerUserWidget extends PolymerElement {
                 type: String,
                 value: null
             },
-            loginOidcProvider: {
+            loginOidcName: {
                 type: String,
                 value: null
             },
@@ -748,15 +739,11 @@ class Las2peerUserWidget extends PolymerElement {
             },
             name: {
               type: String,
-              computed: '_computeName(loginName,loginOidcToken,loginOidcProvider)'
+              computed: '_computeName(loginOidcName)'
             },
             loggedIn: {
                 type: Boolean,
-                computed: '_computeLogin(loginName,loginPassword,loginOidcToken,loginOidcProvider)'
-            },
-            _requestHeaders: {
-                type: Object,
-                computed: '_computeHeaders(loginName,loginPassword,loginOidcToken,loginOidcProvider)'
+                computed: '_computeLogin(loginOidcToken)'
             }
         }
     }
@@ -844,36 +831,16 @@ class Las2peerUserWidget extends PolymerElement {
         }
     }
 
-    _computeHeaders(loginName, loginPassword, loginOidcToken, loginOidcProvider) {
-        var headers = {};
-
-        if (loginName != null && loginPassword != null) {
-            headers["Authorization"] = "Basic " + btoa(loginName + ":" + loginPassword);
-        } else if (loginOidcToken != null) {
-            headers["access_token"] = loginOidcToken;
-
-            if (loginOidcProvider != null) {
-                headers["oidc_provider"] = loginOidcProvider;
-            }
-        }
-
-        return headers;
-    }
-
-    _computeLogin(loginName, loginPassword, loginOidcToken, loginOidcProvider) {
-        if (loginName != null && loginPassword != null) {
-            return true;
-        } else if (loginOidcToken != null && loginOidcProvider != null && loginOidcToken != "undefined") {
+    _computeLogin(loginOidcToken) {
+        if (loginOidcToken != null && loginOidcToken != "undefined") {
             return true;
         }
         return false;
     }
 
-    _computeName(loginName, loginOidcToken, loginOidcProvider){
-      if(loginName != null){
-        return loginName;
-      }else if(loginOidcToken != null && loginOidcProvider != null && loginOidcToken != "undefined"){
-        return oidc_userinfo.preferred_username;
+    _computeName(loginOidcName){
+      if(loginOidcName != null){
+        return loginOidcName;
       }else{
         return ""+Math.random().toString(36).substring(7);
       }
@@ -891,9 +858,9 @@ class Las2peerUserWidget extends PolymerElement {
 
     editUserFunction(event) {
         if (event.detail.confirmed) {
-            firstName = this.$.firstName.value;
-            lastName = this.$.lastName.value;
-            userImage = this.$.userImage.value;
+            this.firstName = this.$.firstName.value;
+            this.lastName = this.$.lastName.value;
+            this.userImage = this.$.userImage.value;
             this.$.ajaxUserinformationUpdate.generateRequest();
         } else {
             this.$.firstName.setAttribute('value', firstName);
@@ -937,13 +904,8 @@ class Las2peerUserWidget extends PolymerElement {
             this.contact = contactlist[x];
             this.$.ajaxContactInformation.generateRequest();
         }
-        if (this.loginName != null && this.loginPassword != null) {
-            if (this.addressbookContacts.indexOf(this.loginName) > -1) {
-              this.appearInAdressbook = true;
-              this.$.appearInAdressbook.setAttribute('checked', this.appearInAdressbook);
-            }
-        } else if (this.loginOidcToken != null && this.loginOidcProvider != null && this.loginOidcToken != "undefined") {
-            if (this.addressbookContacts.indexOf(oidc_userinfo["preferred_username"]) > -1) {
+        if (this.loginOidcToken != null && this.loginOidcToken != "undefined") {
+            if (this.addressbookContacts.indexOf(loginOidcName) > -1) {
               this.appearInAdressbook = true;
               this.$.appearInAdressbook.setAttribute('checked', this.appearInAdressbook);
             }
@@ -1077,9 +1039,9 @@ class Las2peerUserWidget extends PolymerElement {
             imgUrl = jsonObject["userImage"];
         }
         //$('#img'+currentUser).css("background-image", "url(https://las2peer.org/wp-content/uploads/2016/04/las2peer-logo-circle.png)");
-        $("div[id='img" + currentUser + "']").css("background-image", "url(logo.png)");
-        $("div[id='imgg" + currentUser + "']").css("background-image", "url(logo.png)");
-        $("div[id='imgAddr" + currentUser + "']").css("background-image", "url(logo.png)");
+        $("div[id='img" + currentUser + "']").css("background-image", "url(node_modules/las2peer-frontend-user-widget/logo.png)");
+        $("div[id='imgg" + currentUser + "']").css("background-image", "url(node_modules/las2peer-frontend-user-widget/logo.png");
+        $("div[id='imgAddr" + currentUser + "']").css("background-image", "url(node_modules/las2peer-frontend-user-widget/logo.png)");
         if (imgUrl.length > 1) {
             $("div[id='img" + currentUser + "']").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + imgUrl + "')");
             $("div[id='imgg" + currentUser + "']").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + imgUrl + "')");
@@ -1114,14 +1076,14 @@ class Las2peerUserWidget extends PolymerElement {
         this.$.lastName.setAttribute('value', lastName);
         this.$.userImage.setAttribute('value', userImage);
         if(userImage.length>0){
-          $('#dropdown-button').css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')");
+          document.getElementsByClassName("dropdown-button").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')");
           document.querySelector("#preview").style.backgroundImage = "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')";
         }
         console.log(firstName + " " + lastName + ", " + userImage);
     }
 
     _updatedUserInformation(event) {
-        $('#dropdown-button').css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')");
+        document.getElementsByClassName("dropdown-button").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')");
     }
 
     _updatePermission(event) {
@@ -1161,7 +1123,7 @@ class Las2peerUserWidget extends PolymerElement {
         userImage = event.detail.response;
         document.getElementById('userImage').setAttribute('value', userImage);
         if(userImage.length>0){
-          $('#dropdown-button').css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')");
+          document.getElementsByClassName("dropdown-button").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')");
           document.querySelector("#preview").style.backgroundImage = "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')";
         }
     }
