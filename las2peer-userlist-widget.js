@@ -37,10 +37,6 @@ class Las2peerUserlistWidget extends PolymerElement {
                 type: String,
                 value: null
             },
-            loginOidcProvider: {
-                type: String,
-                value: null
-            },
             contacts: {
                 type: Object,
                 value: []

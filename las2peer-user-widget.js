@@ -69,7 +69,7 @@ class Las2peerUserWidget extends PolymerElement {
                 border-radius: 20px;
                 -webkit-border-radius: 20px;
                 -moz-border-radius: 20px;
-                background-image: url('node_modules/las2peer-frontend-user-widget/logo.png');
+                background-image: url('https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png');
                 background-size: 100% 100%;
                 background-color: rgba(0, 0, 0, 0);
                 box-shadow: 0 0 8px rgba(0, 0, 0, .8);
@@ -128,7 +128,7 @@ class Las2peerUserWidget extends PolymerElement {
                 border-radius: 20px;
                 box-sizing: border-box;
                 background-color: #ddd;
-                background-image: url('node_modules/las2peer-frontend-user-widget/logo.png');
+                background-image: url('https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png');
             }
             #itemsList,
             #selectedItemsList {
@@ -426,7 +426,9 @@ class Las2peerUserWidget extends PolymerElement {
 
         <button class="dropdown-trigger" id="dropdown-button" on-click="_openDropdown"></button>
         <iron-dropdown id="dropdown">
-          <template is="dom-if" if="{{loggedIn}}">
+            // for now the widget drops down regardless whether a valid login is detected
+            // until I find a proper solution for detecting a valid login
+          //<template is="dom-if" if="{{loggedIn}}">
               <ul class="dropdown-content" slot="dropdown-content" tabindex="0">
                   <li><a href="javascript:void(0)" on-click="_editProfile">Edit profile</a>
                   </li>
@@ -439,7 +441,7 @@ class Las2peerUserWidget extends PolymerElement {
                   <li><a href="javascript:void(0)" on-click="_addressbook">Addressbook</a>
                   </li>
               </ul>
-          </template>
+          //</template>
         </iron-dropdown>
         <paper-toast id="errorToast" class="fit-bottom" text=""></paper-toast>
         <paper-dialog id="editUser" on-iron-overlay-closed="editUserFunction" style="width:400px">
@@ -1038,10 +1040,10 @@ class Las2peerUserWidget extends PolymerElement {
         if (typeof jsonObject["userImage"] !== 'undefined') {
             imgUrl = jsonObject["userImage"];
         }
-        //$('#img'+currentUser).css("background-image", "url(https://las2peer.org/wp-content/uploads/2016/04/las2peer-logo-circle.png)");
-        $("div[id='img" + currentUser + "']").css("background-image", "url(node_modules/las2peer-frontend-user-widget/logo.png)");
-        $("div[id='imgg" + currentUser + "']").css("background-image", "url(node_modules/las2peer-frontend-user-widget/logo.png");
-        $("div[id='imgAddr" + currentUser + "']").css("background-image", "url(node_modules/las2peer-frontend-user-widget/logo.png)");
+        //$('#img'+currentUser).css("background-image", "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png)");
+        $("div[id='img" + currentUser + "']").css("background-image", "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png)");
+        $("div[id='imgg" + currentUser + "']").css("background-image", "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png");
+        $("div[id='imgAddr" + currentUser + "']").css("background-image", "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png)");
         if (imgUrl.length > 1) {
             $("div[id='img" + currentUser + "']").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + imgUrl + "')");
             $("div[id='imgg" + currentUser + "']").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + imgUrl + "')");

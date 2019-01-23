@@ -24,7 +24,6 @@
         "@polymer/iron-list": "^3.0.1",
         "@polymer/paper-dialog": "^3.0.1",
         "@polymer/paper-toast": "^3.0.1",
-        "@polymer/paper-dialog-scrollable": "^3.0.1",
-        "openidconnect-signin": "github:rwth-acis/openidconnect-signin#lit-element"
+        "@polymer/paper-dialog-scrollable": "^3.0.1"
     }
 }
