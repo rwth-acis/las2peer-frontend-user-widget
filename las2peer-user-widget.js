@@ -426,9 +426,9 @@ class Las2peerUserWidget extends PolymerElement {
 
         <button class="dropdown-trigger" id="dropdown-button" on-click="_openDropdown"></button>
         <iron-dropdown id="dropdown">
-            // for now the widget drops down regardless whether a valid login is detected
-            // until I find a proper solution for detecting a valid login
-          //<template is="dom-if" if="{{loggedIn}}">
+            <!-- for now the widget drops down regardless whether a valid login is detected -->
+            <!-- until I find a proper solution for detecting a valid login -->
+          <!-- <template is="dom-if" if="{{loggedIn}}"> -->
               <ul class="dropdown-content" slot="dropdown-content" tabindex="0">
                   <li><a href="javascript:void(0)" on-click="_editProfile">Edit profile</a>
                   </li>
@@ -441,7 +441,7 @@ class Las2peerUserWidget extends PolymerElement {
                   <li><a href="javascript:void(0)" on-click="_addressbook">Addressbook</a>
                   </li>
               </ul>
-          //</template>
+          <!-- </template> -->
         </iron-dropdown>
         <paper-toast id="errorToast" class="fit-bottom" text=""></paper-toast>
         <paper-dialog id="editUser" on-iron-overlay-closed="editUserFunction" style="width:400px">
