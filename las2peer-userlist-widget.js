@@ -13,7 +13,8 @@ class Las2peerUserlistWidget extends PolymerElement {
           handle-as="json"
           on-response="_updateContactList"
           on-error="_handleError"
-          with-credentials="true">
+          //with-credentials="true"
+          headers='[[_requestHeaders]]'>
         </iron-ajax>
 
         <input list="contactlist" name="contactlist">
@@ -47,8 +48,29 @@ class Las2peerUserlistWidget extends PolymerElement {
             loggedIn: {
                 type: Boolean,
                 computed: '_computeLogin(loginOidcToken)'
+            },
+            loginName: {
+                type: String,
+                value: null
+            },
+            loginPassword: {
+                type: String,
+                value: null
+            },
+            _requestHeaders: {
+                type: Object,
+                computed: '_computeHeaders(loginName,loginPassword)'
             }
         }
+    }
+
+    _computeHeaders(loginName, loginPassword) {
+        var headers = {};
+
+        if (loginName != null && loginPassword != null) {
+            headers["Authorization"] = "Basic " + btoa(loginName + ":" + loginPassword);
+        }
+        return headers;
     }
 
     addUser(list, user) {
@@ -64,6 +86,8 @@ class Las2peerUserlistWidget extends PolymerElement {
     }
 
     _computeLogin(loginOidcToken) {
+        if (loginName != null)
+            return true;
         if (loginOidcToken != null && loginOidcToken != "undefined") {
             return true;
         }

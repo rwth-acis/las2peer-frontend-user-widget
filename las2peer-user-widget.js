@@ -223,205 +223,225 @@ class Las2peerUserWidget extends PolymerElement {
             }
         </style>
 
-        <iron-ajax
-          id="ajaxUserinformation"
-          url='[[baseUrl]]/contactservice/user'
-          params='{}'
-          handle-as="text"
-          on-response="_getUserInformation"
-          on-error="_handleError"
-          with-credentials="true">
-        </iron-ajax>
+            // with-credentials="true" sends the session id cookie in the header which may be used to autheticate an agent
+            // for testing this is not recommended since it leads to cors (see https://stackoverflow.com/questions/29954037/why-is-an-options-request-sent-and-can-i-disable-it)
+            <iron-ajax
+              id="ajaxUserinformation"
+              url='[[baseUrl]]/contactservice/user'
+              params='{}'
+              handle-as="text"
+              on-response="_getUserInformation"
+              on-error="_handleError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'>
+            </iron-ajax>
 
-        <iron-ajax id="ajaxContactInformation" url='[[baseUrl]]/contactservice/user/[[contact]]'
-          params='{}'
-          handle-as="text"
-          on-response="_getContactInformation"
-          on-error="_handleError"
-          with-credentials="true">
-        </iron-ajax>
+            <iron-ajax id="ajaxContactInformation" url='[[baseUrl]]/contactservice/user/[[contact]]'
+              params='{}'
+              handle-as="text"
+              on-response="_getContactInformation"
+              on-error="_handleError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxUserinformationUpdate"
-          url='[[baseUrl]]/contactservice/user'
-          method='POST'
-          params='{}'
-          body='{"firstName":"[[firstName]]","lastName":"[[lastName]]","userImage":"[[userImage]]"}'
-          handle-as="json"
-          on-response="_updatedUserInformation"
-          on-error="_handleError"
-          with-credentials="true"
-          content-type='text/plain'>
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxUserinformationUpdate"
+              url='[[baseUrl]]/contactservice/user'
+              method='POST'
+              params='{}'
+              body='{"firstName":"[[firstName]]","lastName":"[[lastName]]","userImage":"[[userImage]]"}'
+              handle-as="json"
+              on-response="_updatedUserInformation"
+              on-error="_handleError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'
+              content-type='text/plain'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxAddUser"
-          url='[[baseUrl]]/contactservice/[[contactToAdd]]'
-          method='POST'
-          params='{}'
-          handle-as="text"
-          on-response="contactAdded"
-          on-error="_contactAddError"
-          with-credentials="true">
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxAddUser"
+              url='[[baseUrl]]/contactservice/[[contactToAdd]]'
+              method='POST'
+              params='{}'
+              handle-as="text"
+              on-response="contactAdded"
+              on-error="_contactAddError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxGetContacts"
-          url='[[baseUrl]]/contactservice'
-          params='{}'
-          handle-as="json"
-          on-response="_updateContactList"
-          on-error="_handleError"
-          with-credentials="true">
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxGetContacts"
+              url='[[baseUrl]]/contactservice'
+              params='{}'
+              handle-as="json"
+              on-response="_updateContactList"
+              on-error="_handleError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxRemoveContact"
-          url='[[baseUrl]]/contactservice/[[contactToRemove]]'
-          method='DELETE'
-          params='{}'
-          handle-as="text"
-          on-response="contactRemoved"
-          on-error="_handleError"
-          with-credentials="true"
-          content-type='text/plain'>
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxRemoveContact"
+              url='[[baseUrl]]/contactservice/[[contactToRemove]]'
+              method='DELETE'
+              params='{}'
+              handle-as="text"
+              on-response="contactRemoved"
+              on-error="_handleError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'
+              content-type='text/plain'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxGetPermissions"
-          url='[[baseUrl]]/contactservice/permission'
-          params='{}'
-          handle-as="text"
-          on-response="_updatePermission"
-          on-error="_handleError"
-          with-credentials="true">
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxGetPermissions"
+              url='[[baseUrl]]/contactservice/permission'
+              params='{}'
+              handle-as="text"
+              on-response="_updatePermission"
+              on-error="_handleError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxUserPermissionUpdate"
-          url='[[baseUrl]]/contactservice/permission'
-          method='POST'
-          params='{}'
-          body='{"firstName":[[firstNamePermission]],"lastName":[[lastNamePermission]],"userImage":[[userImagePermission]]}'
-          handle-as="json"
-          on-response="loadPermissions"
-          on-error="_handleError"
-          with-credentials="true"
-          content-type='text/plain'>
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxUserPermissionUpdate"
+              url='[[baseUrl]]/contactservice/permission'
+              method='POST'
+              params='{}'
+              body='{"firstName":[[firstNamePermission]],"lastName":[[lastNamePermission]],"userImage":[[userImagePermission]]}'
+              handle-as="json"
+              on-response="loadPermissions"
+              on-error="_handleError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'
+              content-type='text/plain'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxAddToAddressbook"
-          url='[[baseUrl]]/contactservice/addressbook'
-          method='POST'
-          params='{}'
-          handle-as="text"
-          on-response="loadAddressbook"
-          on-error="_addressbookError"
-          with-credentials="true"
-          content-type='text/plain'>
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxAddToAddressbook"
+              url='[[baseUrl]]/contactservice/addressbook'
+              method='POST'
+              params='{}'
+              handle-as="text"
+              on-response="loadAddressbook"
+              on-error="_addressbookError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'
+              content-type='text/plain'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxRemoveFromAddressbook"
-          url='[[baseUrl]]/contactservice/addressbook'
-          method='DELETE'
-          params='{}'
-          handle-as="text"
-          on-response="loadAddressbook"
-          on-error="_addressbookError"
-          with-credentials="true"
-          content-type='text/plain'>
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxRemoveFromAddressbook"
+              url='[[baseUrl]]/contactservice/addressbook'
+              method='DELETE'
+              params='{}'
+              handle-as="text"
+              on-response="loadAddressbook"
+              on-error="_addressbookError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'
+              content-type='text/plain'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxGetAddressbook"
-          url='[[baseUrl]]/contactservice/addressbook'
-          params='{}'
-          handle-as="json"
-          on-response="updateAddressbook"
-          on-error="_addressbookError"
-          with-credentials="true">
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxGetAddressbook"
+              url='[[baseUrl]]/contactservice/addressbook'
+              params='{}'
+              handle-as="json"
+              on-response="updateAddressbook"
+              on-error="_addressbookError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxGetGroups"
-          url='[[baseUrl]]/contactservice/groups'
-          params='{}'
-          handle-as="json"
-          on-response="_updateGroups"
-          on-error="_handleError"
-          with-credentials="true">
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxGetGroups"
+              url='[[baseUrl]]/contactservice/groups'
+              params='{}'
+              handle-as="json"
+              on-response="_updateGroups"
+              on-error="_handleError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxGetGroupMember"
-          url='[[baseUrl]]/contactservice/groups/[[group]]/member'
-          params='{}'
-          handle-as="json"
-          on-response="_updateGroupMemberlist"
-          on-error="_handleError"
-          with-credentials="true">
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxGetGroupMember"
+              url='[[baseUrl]]/contactservice/groups/[[group]]/member'
+              params='{}'
+              handle-as="json"
+              on-response="_updateGroupMemberlist"
+              on-error="_handleError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxAddGroup"
-          url='[[baseUrl]]/contactservice/groups/[[group]]'
-          method='POST'
-          params='{}'
-          handle-as="text"
-          on-response="_groupAdded"
-          on-error="_handleError"
-          with-credentials="true"
-          content-type='text/plain'>
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxAddGroup"
+              url='[[baseUrl]]/contactservice/groups/[[group]]'
+              method='POST'
+              params='{}'
+              handle-as="text"
+              on-response="_groupAdded"
+              on-error="_handleError"
+              headers='[[_requestHeaders]]'
+              //with-credentials="true"
+              content-type='text/plain'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxRemoveGroup"
-          url='[[baseUrl]]/contactservice/groups/[[group]]'
-          method='DELETE'
-          params='{}'
-          handle-as="text"
-          on-response="_groupRemoved"
-          on-error="_handleError"
-          with-credentials="true"
-          content-type='text/plain'>
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxRemoveGroup"
+              url='[[baseUrl]]/contactservice/groups/[[group]]'
+              method='DELETE'
+              params='{}'
+              handle-as="text"
+              on-response="_groupRemoved"
+              on-error="_handleError"
+              headers='[[_requestHeaders]]'
+              //with-credentials="true"
+              content-type='text/plain'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxAddGroupMember"
-          url='[[baseUrl]]/contactservice/groups/[[group]]/member/[[contact]]'
-          method='POST'
-          params='{}'
-          handle-as="json"
-          on-response="_memberAdded"
-          on-error="_handleError"
-          with-credentials="true"
-          content-type='text/plain'>
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxAddGroupMember"
+              url='[[baseUrl]]/contactservice/groups/[[group]]/member/[[contact]]'
+              method='POST'
+              params='{}'
+              handle-as="json"
+              on-response="_memberAdded"
+              on-error="_handleError"
+              //with-credentials="true"
+              headers='[[_requestHeaders]]'
+              content-type='text/plain'>
+            </iron-ajax>
 
-        <iron-ajax
-          id="ajaxRemoveGroupMember"
-          url='[[baseUrl]]/contactservice/groups/[[group]]/member/[[contact]]'
-          method='DELETE'
-          params='{}'
-          handle-as="json"
-          on-response="_memberRemoved"
-          on-error="_handleError"
-          with-credentials="true"
-          content-type='text/plain'>
-        </iron-ajax>
+            <iron-ajax
+              id="ajaxRemoveGroupMember"
+              url='[[baseUrl]]/contactservice/groups/[[group]]/member/[[contact]]'
+              method='DELETE'
+              params='{}'
+              handle-as="json"
+              on-response="_memberRemoved"
+              on-error="_handleError"
+              headers='[[_requestHeaders]]'
+              //with-credentials="true"
+              content-type='text/plain'>
+            </iron-ajax>
 
-        <iron-ajax
-           id="ajaxUpdateAvatar"
-           url = '[[baseUrl]]/fileservice/files'
-           method="POST"
-           params='{}'
-           handle-as="text"
-           on-response="_updateAvatar"
-           on-error="_handleError"
-           with-credentials="true"
-           >
+            <iron-ajax
+               id="ajaxUpdateAvatar"
+               url = '[[baseUrl]]/fileservice/files'
+               method="POST"
+               params='{}'
+               handle-as="text"
+               on-response="_updateAvatar"
+               on-error="_handleError"
+               //with-credentials="true"
+               headers = '[[_requestHeaders]]'
+               >
         </iron-ajax>
 
         <button class="dropdown-trigger" id="dropdown-button" on-click="_openDropdown"></button>
@@ -745,9 +765,30 @@ class Las2peerUserWidget extends PolymerElement {
             },
             loggedIn: {
                 type: Boolean,
-                computed: '_computeLogin(loginOidcToken)'
+                computed: '_computeLogin(loginName,loginOidcToken)'
+            },
+            loginName: {
+                type: String,
+                value: null
+            },
+            loginPassword: {
+                type: String,
+                value: null
+            },
+            _requestHeaders: {
+                type: Object,
+                computed: '_computeHeaders(loginName,loginPassword)'
             }
         }
+    }
+
+    _computeHeaders(loginName, loginPassword) {
+        var headers = {};
+
+        if (loginName != null && loginPassword != null) {
+            headers["Authorization"] = "Basic " + btoa(loginName + ":" + loginPassword);
+        }
+        return headers;
     }
 
     addUser(list, user) {
@@ -769,13 +810,13 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     addContact(e, detail) {
-        var cta = this.$.addContactName;
+        var cta = this.$.addContactName.value;
         this.contactToAdd = cta;
         this.$.ajaxAddUser.generateRequest();
     }
 
     addGroup(e, detail) {
-        var groupName = this.$.addGroupName;
+        var groupName = this.$.addGroupName.value;
         this.group = groupName;
         this.$.ajaxAddGroup.generateRequest();
     }
@@ -833,7 +874,9 @@ class Las2peerUserWidget extends PolymerElement {
         }
     }
 
-    _computeLogin(loginOidcToken) {
+    _computeLogin(loginName,loginOidcToken) {
+        if (loginName != null)
+                return true;
         if (loginOidcToken != null && loginOidcToken != "undefined") {
             return true;
         }
@@ -865,9 +908,9 @@ class Las2peerUserWidget extends PolymerElement {
             this.userImage = this.$.userImage.value;
             this.$.ajaxUserinformationUpdate.generateRequest();
         } else {
-            this.$.firstName.setAttribute('value', firstName);
-            this.$.lastName.setAttribute('value', lastName);
-            this.$.userImage.setAttribute('value', userImage);
+            this.$.firstName.setAttribute('value', this.firstName);
+            this.$.lastName.setAttribute('value', this.lastName);
+            this.$.userImage.setAttribute('value', this.userImage);
         }
     }
 
@@ -1041,13 +1084,16 @@ class Las2peerUserWidget extends PolymerElement {
             imgUrl = jsonObject["userImage"];
         }
         //$('#img'+currentUser).css("background-image", "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png)");
-        $("div[id='img" + currentUser + "']").css("background-image", "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png)");
-        $("div[id='imgg" + currentUser + "']").css("background-image", "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png");
-        $("div[id='imgAddr" + currentUser + "']").css("background-image", "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png)");
+        var imgUrl_css = "https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png";
+        if (imgUrl.length > 1)
+            imgUrl_css = this.baseUrl + "/fileservice/files/" + imgUrl;
+        this.shadowRoot.querySelector("#img" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
+        this.shadowRoot.querySelector("#imgg" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
+        this.shadowRoot.querySelector("#imgAddr" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
         if (imgUrl.length > 1) {
-            $("div[id='img" + currentUser + "']").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + imgUrl + "')");
-            $("div[id='imgg" + currentUser + "']").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + imgUrl + "')");
-            $("div[id='imgAddr" + currentUser + "']").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + imgUrl + "')");
+            this.shadowRoot.querySelector("#img" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
+            this.shadowRoot.querySelector("#imgg" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
+            this.shadowRoot.querySelector("#imgAddr" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
         }
     }
 
@@ -1071,21 +1117,21 @@ class Las2peerUserWidget extends PolymerElement {
         var response = event.target.lastResponse;
         response = response.substring(1, response.length - 1);
         var res = response.split(",");
-        firstName = res[0].substring(res[0].indexOf('=') + 1);
-        lastName = res[1].substring(res[1].indexOf('=') + 1);
-        userImage = res[2].substring(res[2].indexOf('=') + 1);
-        this.$.firstName.setAttribute('value', firstName);
-        this.$.lastName.setAttribute('value', lastName);
-        this.$.userImage.setAttribute('value', userImage);
-        if(userImage.length>0){
-          document.getElementsByClassName("dropdown-button").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')");
-          document.querySelector("#preview").style.backgroundImage = "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')";
+        this.firstName = res[0].substring(res[0].indexOf('=') + 1);
+        this.lastName = res[1].substring(res[1].indexOf('=') + 1);
+        this.userImage = res[2].substring(res[2].indexOf('=') + 1);
+        this.$.firstName.setAttribute('value', this.firstName);
+        this.$.lastName.setAttribute('value', this.lastName);
+        this.$.userImage.setAttribute('value', this.userImage);
+        if(this.userImage.length>0){
+          this.shadowRoot.querySelector("#dropdown-button").style.backgroundImage = "url(" + this.baseUrl + "/fileservice/files/" + this.userImage + ")";
+          this.shadowRoot.querySelector("#preview").style.backgroundImage = "url(" + this.baseUrl + "/fileservice/files/" + this.userImage + ")";
         }
-        console.log(firstName + " " + lastName + ", " + userImage);
+        console.log(this.firstName + " " + this.lastName + ", " + this.userImage);
     }
 
     _updatedUserInformation(event) {
-        document.getElementsByClassName("dropdown-button").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')");
+        this.shadowRoot.querySelector("#dropdown-button").style.backgroundImage = "url(" + this.baseUrl + "/fileservice/files/" + this.userImage + ")";
     }
 
     _updatePermission(event) {
@@ -1096,13 +1142,13 @@ class Las2peerUserWidget extends PolymerElement {
         this.userImagePermission = res[2].substring(res[2].indexOf('=') + 1);
         this.userImagePermission = this.userImagePermission.substring(0, this.userImagePermission.length - 1);
         if (this.firstNamePermission == "true") {
-            document.getElementById('firstNamePermission').setAttribute('checked', this.firstNamePermission);
+            this.$.firstNamePermission.setAttribute('checked', this.firstNamePermission);
         }
         if (this.lastNamePermission == "true") {
-            document.getElementById('lastNamePermission').setAttribute('checked', this.lastNamePermission);
+            this.$.lastNamePermission.setAttribute('checked', this.lastNamePermission);
         }
         if (this.userImagePermission == "true") {
-            document.getElementById('userImagePermission').setAttribute('checked', this.userImagePermission);
+            this.$.userImagePermission.setAttribute('checked', this.userImagePermission);
         }
     }
 
@@ -1122,11 +1168,11 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     _updateAvatar(event){
-        userImage = event.detail.response;
-        document.getElementById('userImage').setAttribute('value', userImage);
-        if(userImage.length>0){
-          document.getElementsByClassName("dropdown-button").css("background-image", "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')");
-          document.querySelector("#preview").style.backgroundImage = "url('"+this.baseUrl+"/fileservice/files/" + userImage + "')";
+        this.userImage = event.detail.response;
+        this.$.userImage.setAttribute('value', this.userImage);
+        if(this.userImage.length>0){
+          this.shadowRoot.querySelector("#dropdown-button").style.backgroundImage = "url(" + this.baseUrl + "/fileservice/files/" + this.userImage + ")";
+          this.shadowRoot.querySelector("#preview").style.backgroundImage = "url(" + this.baseUrl + "/fileservice/files/" + this.userImage + ")";
         }
     }
 
