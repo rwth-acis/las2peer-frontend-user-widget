@@ -13,7 +13,7 @@ class Las2peerUserlistWidget extends PolymerElement {
           handle-as="json"
           on-response="_updateContactList"
           on-error="_handleError"
-          with-credentials="true"
+          with-credentials='[[sendCookie]]'
           headers='[[_requestHeaders]]'>
         </iron-ajax>
 
@@ -60,6 +60,10 @@ class Las2peerUserlistWidget extends PolymerElement {
             _requestHeaders: {
                 type: Object,
                 computed: '_computeHeaders(loginName,loginPassword)'
+            },
+            sendCookie: {
+                type: Boolean,
+                value: false
             }
         }
     }
