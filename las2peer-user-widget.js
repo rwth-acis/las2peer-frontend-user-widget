@@ -878,7 +878,7 @@ class Las2peerUserWidget extends PolymerElement {
 
     _computeLogin(loginName,loginOidcToken) {
         if (loginName != null)
-                return true;
+            return true;
         if (loginOidcToken != null && loginOidcToken != "undefined") {
             return true;
         }
@@ -946,13 +946,19 @@ class Las2peerUserWidget extends PolymerElement {
     updateAddressbook(event, detail) {
         this.addressbookContacts = [];
         var contactlist = event.detail.response;
-        for (var x in contactlist) {
-            this.addUser('addressbookContacts',contactlist[x]);
-            this.contact = contactlist[x];
+        let keys = Object.keys(contactlist);
+        for (var i = 0; i < keys.length; i++) {
+            this.addUser('addressbookContacts',contactlist[keys[i]]);
+            this.contact = contactlist[keys[i]];
             this.$.ajaxContactInformation.generateRequest();
         }
-        if (this.loginOidcToken != null && this.loginOidcToken != "undefined") {
-            if (this.addressbookContacts.indexOf(loginOidcName) > -1) {
+        var userName;
+        if (this.loginOidcToken != null && typeof this.loginOidcToken != "undefined")
+            userName = this.loginOidcName;
+        else if (this.loginName != null && typeof this.loginName != "undefined")
+            userName = this.loginName;
+        if (typeof userName != "undefined"){
+            if (this.addressbookContacts.indexOf(userName) > -1) {
               this.appearInAdressbook = true;
               this.$.appearInAdressbook.setAttribute('checked', this.appearInAdressbook);
             }
@@ -960,10 +966,10 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     removeContact(event, detail) {
-        console.log("Removing " + event.path[1].id + " from your contact list");
-        this.contactToRemove = event.path[1].id + "";
+        this.contactToRemove = event.path[2].id + "";
+        console.log("Removing " + this.contactToRemove + " from your contact list");
         this.$.ajaxRemoveContact.generateRequest();
-
+        delete this.contacts[this.contactToRemove];
     }
 
     removeGroupMember(event, detail) {
@@ -1010,19 +1016,18 @@ class Las2peerUserWidget extends PolymerElement {
     _updateGroups(event) {
         var res = event.detail.response;
         this.groups = [];
+        let keys = Object.keys(res);
 
-        for (group in res) {
-            this.addUser('groups', res[group]);
+        for (var i = 0; i < keys.length; i++) {
+            this.addUser('groups', res[keys[i]]);
         }
-        if (Object.keys(res).length > 0) {
+        if (keys > 0) {
             if (this.$.groupSelect.value.length > 0) {
                 this._updateGroupMemberlist2();
             } else {
-                var keys = Object.keys(res);
                 this.group = res[keys[0]];
                 this.$.ajaxGetGroupMember.generateRequest();
             }
-
         }
     }
 
@@ -1030,12 +1035,14 @@ class Las2peerUserWidget extends PolymerElement {
         var res = event.detail.response;
         this.groupMember = [];
         this.contactsCanAdd = [];
-        for (c in this.contacts) {
-            this.addUser("contactsCanAdd", this.contacts[c]);
+        let keys = Object.keys(this.contacts);
+        for (var i = 0; i < keys.length; i++) {
+            this.addUser("contactsCanAdd", this.contacts[keys[i]]);
         }
-        for (member in res) {
-            this.addUser('groupMember', res[member]);
-            this.removeUserCanAdd('contactsCanAdd', res[member]);
+        keys = Object.keys(res);
+        for (var i = 0; i < keys.kength; i++) {
+            this.addUser('groupMember', res[keys[i]]);
+            this.removeUserCanAdd('contactsCanAdd', res[keys[i]]);
             //this.contact = res[member];
             //this.$.ajaxContactInformation.generateRequest();
         }
@@ -1071,8 +1078,8 @@ class Las2peerUserWidget extends PolymerElement {
         result = result.replace(/ /g, "");
         var res = result.split(",");
         var json = "{";
-        for (var x in res) {
-            var res2 = res[x].split("=");
+        for (var i = 0; i < res.length; i++) {
+            var res2 = res[i].split("=");
             json = json + "\"" + res2[0] + "\":" + "\"" + res2[1] + "\",";
         }
         json = json.substring(0, json.length - 1);
@@ -1092,19 +1099,15 @@ class Las2peerUserWidget extends PolymerElement {
         this.shadowRoot.querySelector("#img" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
         this.shadowRoot.querySelector("#imgg" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
         this.shadowRoot.querySelector("#imgAddr" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
-        if (imgUrl.length > 1) {
-            this.shadowRoot.querySelector("#img" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
-            this.shadowRoot.querySelector("#imgg" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
-            this.shadowRoot.querySelector("#imgAddr" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
-        }
     }
 
     _updateContactList(event) {
         var userliste = event.target.lastResponse;
         this.contacts = [];
-        for (user in userliste) {
-            this.addUser('contacts', userliste[user]);
-            this.contact = userliste[user];
+        let keys = Object.keys(userliste);
+        for (var i = 0; i < keys.length; i++) {
+            this.addUser('contacts', userliste[keys[i]]);
+            this.contact = userliste[keys[i]];
             this.$.ajaxContactInformation.generateRequest();
         }
         this.contacts.sort(function(a, b) {

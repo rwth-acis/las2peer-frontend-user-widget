@@ -108,8 +108,9 @@ class Las2peerUserlistWidget extends PolymerElement {
     _updateContactList(event) {
         var userliste = event.target.lastResponse.users;
         this.contacts = [];
-        for (user in userliste) {
-            this.addUser('contacts', userliste[user]);
+        let keys = Object.keys(userliste);
+        for (var i = 0; i < keys.length; i++) {
+            this.addUser('contacts', userliste[keys[i]]);
         }
         if (this.contacts.length > 0) {
             this.value = this.contacts[0];
