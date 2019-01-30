@@ -13,7 +13,7 @@ class Las2peerUserlistWidget extends PolymerElement {
           handle-as="json"
           on-response="_updateContactList"
           on-error="_handleError"
-          //with-credentials="true"
+          with-credentials="true"
           headers='[[_requestHeaders]]'>
         </iron-ajax>
 

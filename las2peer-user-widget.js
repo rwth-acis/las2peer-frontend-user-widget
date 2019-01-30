@@ -232,7 +232,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="_getUserInformation"
               on-error="_handleError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -241,7 +241,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="_getContactInformation"
               on-error="_handleError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -254,7 +254,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="_updatedUserInformation"
               on-error="_handleError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'
               content-type='text/plain'>
             </iron-ajax>
@@ -267,7 +267,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="contactAdded"
               on-error="_contactAddError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -278,7 +278,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="_updateContactList"
               on-error="_handleError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -290,7 +290,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="contactRemoved"
               on-error="_handleError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'
               content-type='text/plain'>
             </iron-ajax>
@@ -302,7 +302,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="_updatePermission"
               on-error="_handleError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -315,7 +315,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="loadPermissions"
               on-error="_handleError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'
               content-type='text/plain'>
             </iron-ajax>
@@ -328,7 +328,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="loadAddressbook"
               on-error="_addressbookError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'
               content-type='text/plain'>
             </iron-ajax>
@@ -341,7 +341,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="loadAddressbook"
               on-error="_addressbookError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'
               content-type='text/plain'>
             </iron-ajax>
@@ -353,7 +353,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="updateAddressbook"
               on-error="_addressbookError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -364,7 +364,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="_updateGroups"
               on-error="_handleError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -375,7 +375,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="_updateGroupMemberlist"
               on-error="_handleError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -388,7 +388,7 @@ class Las2peerUserWidget extends PolymerElement {
               on-response="_groupAdded"
               on-error="_handleError"
               headers='[[_requestHeaders]]'
-              //with-credentials="true"
+              with-credentials="true"
               content-type='text/plain'>
             </iron-ajax>
 
@@ -401,7 +401,7 @@ class Las2peerUserWidget extends PolymerElement {
               on-response="_groupRemoved"
               on-error="_handleError"
               headers='[[_requestHeaders]]'
-              //with-credentials="true"
+              with-credentials="true"
               content-type='text/plain'>
             </iron-ajax>
 
@@ -413,7 +413,7 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="_memberAdded"
               on-error="_handleError"
-              //with-credentials="true"
+              with-credentials="true"
               headers='[[_requestHeaders]]'
               content-type='text/plain'>
             </iron-ajax>
@@ -427,7 +427,7 @@ class Las2peerUserWidget extends PolymerElement {
               on-response="_memberRemoved"
               on-error="_handleError"
               headers='[[_requestHeaders]]'
-              //with-credentials="true"
+              with-credentials="true"
               content-type='text/plain'>
             </iron-ajax>
 
@@ -439,7 +439,7 @@ class Las2peerUserWidget extends PolymerElement {
                handle-as="text"
                on-response="_updateAvatar"
                on-error="_handleError"
-               //with-credentials="true"
+               with-credentials="true"
                headers = '[[_requestHeaders]]'
                >
         </iron-ajax>
