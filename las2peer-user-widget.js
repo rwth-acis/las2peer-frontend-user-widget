@@ -759,7 +759,7 @@ class Las2peerUserWidget extends PolymerElement {
             },
             name: {
               type: String,
-              computed: '_computeName(loginOidcName)'
+              computed: '_computeName(loginOidcName,loginName)'
             },
             loggedIn: {
                 type: Boolean,
@@ -885,9 +885,11 @@ class Las2peerUserWidget extends PolymerElement {
         return false;
     }
 
-    _computeName(loginOidcName){
+    _computeName(loginOidcName,loginName){
       if(loginOidcName != null){
         return loginOidcName;
+      }else if(loginName != null){
+        return loginName;
       }else{
         return ""+Math.random().toString(36).substring(7);
       }
@@ -953,7 +955,7 @@ class Las2peerUserWidget extends PolymerElement {
             this.$.ajaxContactInformation.generateRequest();
         }
         var userName;
-        if (this.loginOidcToken != null && typeof this.loginOidcToken != "undefined")
+        if (this.loginOidcName != null && typeof this.loginOidcName != "undefined")
             userName = this.loginOidcName;
         else if (this.loginName != null && typeof this.loginName != "undefined")
             userName = this.loginName;
@@ -1096,9 +1098,15 @@ class Las2peerUserWidget extends PolymerElement {
         var imgUrl_css = "https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png";
         if (imgUrl.length > 1)
             imgUrl_css = this.baseUrl + "/fileservice/files/" + imgUrl;
-        this.shadowRoot.querySelector("#img" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
-        this.shadowRoot.querySelector("#imgg" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
-        this.shadowRoot.querySelector("#imgAddr" + currentUser).style.backgroundImage = "url(" + imgUrl_css + ")";
+        let usrAvatar = this.shadowRoot.querySelector("#img" + currentUser);
+        if (usrAvatar != null)
+            usrAvatar.style.backgroundImage = "url(" + imgUrl_css + ")";
+        usrAvatar = this.shadowRoot.querySelector("#imgg" + currentUser);
+        if (usrAvatar != null)
+            usrAvatar.style.backgroundImage = "url(" + imgUrl_css + ")";
+        usrAvatar = this.shadowRoot.querySelector("#imgAddr" + currentUser);
+        if (usrAvatar != null)
+            usrAvatar.style.backgroundImage = "url(" + imgUrl_css + ")";
     }
 
     _updateContactList(event) {
