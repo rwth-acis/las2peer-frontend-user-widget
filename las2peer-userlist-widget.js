@@ -34,10 +34,6 @@ class Las2peerUserlistWidget extends PolymerElement {
                 type: String,
                 value: 'https://las2peer.dbis.rwth-aachen.de:9098',
             },
-            loginOidcToken: {
-                type: String,
-                value: null
-            },
             contacts: {
                 type: Object,
                 value: []
@@ -47,7 +43,7 @@ class Las2peerUserlistWidget extends PolymerElement {
             },
             loggedIn: {
                 type: Boolean,
-                computed: '_computeLogin(loginOidcToken)'
+                computed: '_computeLogin(loginName,loginPassword)'
             },
             loginName: {
                 type: String,
@@ -89,18 +85,16 @@ class Las2peerUserlistWidget extends PolymerElement {
         this.response.apply(this, arguments);
     }
 
-    _computeLogin(loginOidcToken) {
-        if (loginName != null)
+    _computeLogin(loginName,loginPassword) {
+        if (loginName != null && loginPassword != null)
             return true;
-        if (loginOidcToken != null && loginOidcToken != "undefined") {
-            return true;
-        }
+
         return false;
     }
 
     ready() {
         super.ready();
-        if (this.loggedIn) {
+        if (this.loggedIn || this.sendCookie) {
             this.$.ajaxGetContacts.generateRequest();
         }
     }

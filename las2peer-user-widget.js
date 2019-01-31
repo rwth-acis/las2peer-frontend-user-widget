@@ -713,14 +713,6 @@ class Las2peerUserWidget extends PolymerElement {
                 type: Boolean,
                 value: null
             },
-            loginOidcToken: {
-                type: String,
-                value: null
-            },
-            loginOidcName: {
-                type: String,
-                value: null
-            },
             contactToAdd: {
                 type: String,
                 value: null
@@ -759,11 +751,11 @@ class Las2peerUserWidget extends PolymerElement {
             },
             name: {
               type: String,
-              computed: '_computeName(loginOidcName,loginName)'
+              computed: '_computeName(loginName)'
             },
             loggedIn: {
                 type: Boolean,
-                computed: '_computeLogin(loginName,loginOidcToken)'
+                computed: '_computeLogin(loginName,loginPassword)'
             },
             loginName: {
                 type: String,
@@ -876,19 +868,14 @@ class Las2peerUserWidget extends PolymerElement {
         }
     }
 
-    _computeLogin(loginName,loginOidcToken) {
-        if (loginName != null)
+    _computeLogin(loginName,loginPassword) {
+        if (loginName != null && loginPassword != null)
             return true;
-        if (loginOidcToken != null && loginOidcToken != "undefined") {
-            return true;
-        }
         return false;
     }
 
-    _computeName(loginOidcName,loginName){
-      if(loginOidcName != null){
-        return loginOidcName;
-      }else if(loginName != null){
+    _computeName(loginName){
+      if(loginName != null){
         return loginName;
       }else{
         return ""+Math.random().toString(36).substring(7);
@@ -897,7 +884,7 @@ class Las2peerUserWidget extends PolymerElement {
 
     ready() {
         super.ready();
-        if (this.loggedIn) {
+        if (this.loggedIn || this.sendCookie) {
             this.$.ajaxUserinformation.generateRequest();
             this.$.ajaxGetContacts.generateRequest();
             this.$.ajaxGetGroups.generateRequest();
@@ -955,10 +942,13 @@ class Las2peerUserWidget extends PolymerElement {
             this.$.ajaxContactInformation.generateRequest();
         }
         var userName;
-        if (this.loginOidcName != null && typeof this.loginOidcName != "undefined")
-            userName = this.loginOidcName;
-        else if (this.loginName != null && typeof this.loginName != "undefined")
+        if (this.loginName != null)
             userName = this.loginName;
+        else if (this.firstName != null) {
+            userName = this.firstName;
+            if (this.lastName != null)
+                userName += " " + this.lastName;
+        }
         if (typeof userName != "undefined"){
             if (this.addressbookContacts.indexOf(userName) > -1) {
               this.appearInAdressbook = true;
