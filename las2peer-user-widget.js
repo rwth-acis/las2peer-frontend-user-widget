@@ -230,7 +230,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="_getUserInformation"
               on-error="_handleError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -239,7 +238,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="_getContactInformation"
               on-error="_handleError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -252,7 +250,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="_updatedUserInformation"
               on-error="_handleError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'
               content-type='text/plain'>
             </iron-ajax>
@@ -265,7 +262,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="contactAdded"
               on-error="_contactAddError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -276,7 +272,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="_updateContactList"
               on-error="_handleError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -288,7 +283,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="contactRemoved"
               on-error="_handleError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'
               content-type='text/plain'>
             </iron-ajax>
@@ -300,7 +294,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="_updatePermission"
               on-error="_handleError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -313,7 +306,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="loadPermissions"
               on-error="_handleError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'
               content-type='text/plain'>
             </iron-ajax>
@@ -326,7 +318,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="loadAddressbook"
               on-error="_addressbookError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'
               content-type='text/plain'>
             </iron-ajax>
@@ -339,7 +330,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="text"
               on-response="loadAddressbook"
               on-error="_addressbookError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'
               content-type='text/plain'>
             </iron-ajax>
@@ -351,7 +341,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="updateAddressbook"
               on-error="_addressbookError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -362,7 +351,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="_updateGroups"
               on-error="_handleError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -373,7 +361,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="_updateGroupMemberlist"
               on-error="_handleError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'>
             </iron-ajax>
 
@@ -386,7 +373,6 @@ class Las2peerUserWidget extends PolymerElement {
               on-response="_groupAdded"
               on-error="_handleError"
               headers='[[_requestHeaders]]'
-              with-credentials='[[sendCookie]]'
               content-type='text/plain'>
             </iron-ajax>
 
@@ -399,7 +385,6 @@ class Las2peerUserWidget extends PolymerElement {
               on-response="_groupRemoved"
               on-error="_handleError"
               headers='[[_requestHeaders]]'
-              with-credentials='[[sendCookie]]'
               content-type='text/plain'>
             </iron-ajax>
 
@@ -411,7 +396,6 @@ class Las2peerUserWidget extends PolymerElement {
               handle-as="json"
               on-response="_memberAdded"
               on-error="_handleError"
-              with-credentials='[[sendCookie]]'
               headers='[[_requestHeaders]]'
               content-type='text/plain'>
             </iron-ajax>
@@ -425,7 +409,6 @@ class Las2peerUserWidget extends PolymerElement {
               on-response="_memberRemoved"
               on-error="_handleError"
               headers='[[_requestHeaders]]'
-              with-credentials='[[sendCookie]]'
               content-type='text/plain'>
             </iron-ajax>
 
@@ -437,7 +420,6 @@ class Las2peerUserWidget extends PolymerElement {
                handle-as="text"
                on-response="_updateAvatar"
                on-error="_handleError"
-               with-credentials='[[sendCookie]]'
                headers = '[[_requestHeaders]]'
                >
         </iron-ajax>
@@ -884,6 +866,12 @@ class Las2peerUserWidget extends PolymerElement {
 
     ready() {
         super.ready();
+        if (this.sendCookie) {
+            let ajaxReqs = this.shadowRoot.querySelectorAll("iron-ajax");
+            for (var i = 0; i < ajaxReqs.length; i++)
+                if (this.sendCookie)
+                    ajaxReqs[i].withCredentials = true;
+        }
         if (this.loggedIn || this.sendCookie) {
             this.$.ajaxUserinformation.generateRequest();
             this.$.ajaxGetContacts.generateRequest();
@@ -941,16 +929,8 @@ class Las2peerUserWidget extends PolymerElement {
             this.contact = contactlist[keys[i]];
             this.$.ajaxContactInformation.generateRequest();
         }
-        var userName;
-        if (this.loginName != null)
-            userName = this.loginName;
-        else if (this.firstName != null) {
-            userName = this.firstName;
-            if (this.lastName != null)
-                userName += " " + this.lastName;
-        }
-        if (typeof userName != "undefined"){
-            if (this.addressbookContacts.indexOf(userName) > -1) {
+        if (this.loginName != null){
+            if (this.addressbookContacts.indexOf(this.loginName) > -1) {
               this.appearInAdressbook = true;
               this.$.appearInAdressbook.setAttribute('checked', this.appearInAdressbook);
             }
