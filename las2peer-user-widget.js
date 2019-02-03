@@ -539,7 +539,7 @@ class Las2peerUserWidget extends PolymerElement {
                 <div id="userContacts">
                     <iron-list id='itemsList' items='[[contacts]]' selection-enabled multi-selection style='overflow-y:scroll; max-height:200px'>
                         <template>
-                            <div style='padding:5px;display:inline;'>
+                            <div style='padding:5px;'>
                                 <div id="img[[item]]" class="avatar"></div>
                                 <div style='margin-left:5px; position:relative; top:8px;display:inline;'>[[item]]</div>
                                 <div style='float:right'>
@@ -591,7 +591,7 @@ class Las2peerUserWidget extends PolymerElement {
                     <div id="userGroupMember">
                         <iron-list id='itemsList' items='[[groupMember]]' selection-enabled multi-selection style='overflow-y:scroll; max-height:200px'>
                             <template>
-                                <div style='padding:5px;display:inline;'>
+                                <div style='padding:5px;'>
                                     <div id="imgg[[item]]" class="avatar"></div>
                                     <div style='margin-left:5px; position:relative; top:8px;display:inline;'>[[item]]</div>
                                     <div style='float:right'>
@@ -636,7 +636,7 @@ class Las2peerUserWidget extends PolymerElement {
                         <div id="addressbookContacts">
                             <iron-list id='itemsList' items='[[addressbookContacts]]' selection-enabled multi-selection style='overflow-y:scroll; max-height:200px'>
                                 <template>
-                                    <div style='padding:5px;display:inline;'>
+                                    <div style='padding:5px;'>
                                         <div id="imgAddr[[item]]" class="avatar"></div>
                                         <div style='margin-left:5px; position:relative; top:8px;display:inline;'>[[item]]</div>
                                         <!--<div style='float:right'><paper-icon-button class="red" icon="remove" on-click='removeContact' id="[[item]]"></paper-icon-button></div>-->
@@ -974,6 +974,7 @@ class Las2peerUserWidget extends PolymerElement {
 
     contactRemoved(event) {
         this.removeUser('contacts', this.contactToRemove);
+        this.$.itemsList.notifyResize();
         this.contacts.sort(function(a, b) {
             if (a.toLowerCase() < b.toLowerCase()) return -1;
             if (a.toLowerCase() > b.toLowerCase()) return 1;
