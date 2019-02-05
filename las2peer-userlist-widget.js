@@ -42,7 +42,7 @@ class Las2peerUserlistWidget extends PolymerElement {
             },
             loggedIn: {
                 type: Boolean,
-                computed: '_computeLogin(loginName)'
+                computed: '_computeLogin(loginName,loginOidcToken,loginOidcProvider)'
             },
             loginName: {
                 type: String,
@@ -52,9 +52,17 @@ class Las2peerUserlistWidget extends PolymerElement {
                 type: String,
                 value: null
             },
+            loginOidcToken: {
+                type: String,
+                value: null
+            },
+            loginOidcProvider: {
+                type: String,
+                value: null
+            },
             _requestHeaders: {
                 type: Object,
-                computed: '_computeHeaders(loginName,loginPassword)'
+                computed: '_computeHeaders(loginName,loginPassword,loginOidcToken,loginOidcProvider)'
             },
             sendCookie: {
                 type: Boolean,
@@ -63,11 +71,16 @@ class Las2peerUserlistWidget extends PolymerElement {
         }
     }
 
-    _computeHeaders(loginName, loginPassword) {
+    _computeHeaders(loginName, loginPassword, loginOidcToken, loginOidcProvider) {
         var headers = {};
 
         if (loginName != null && loginPassword != null) {
             headers["Authorization"] = "Basic " + btoa(loginName + ":" + loginPassword);
+        } else if (loginOidcToken != null) {
+            headers["access_token"] = loginOidcToken;
+            if (loginOidcProvider != null) {
+                headers["oidc_provider"] = loginOidcProvider;
+            }
         }
         return headers;
     }
@@ -84,8 +97,13 @@ class Las2peerUserlistWidget extends PolymerElement {
         this.response.apply(this, arguments);
     }
 
-    _computeLogin(loginName) {
-        return (loginName != null);
+    _computeLogin(loginName, loginOidcToken, loginOidcProvider) {
+        if (loginName != null) {
+            return true;
+        } else if (loginOidcToken != null && loginOidcProvider != null && loginOidcToken != "undefined") {
+            return true;
+        }
+        return false;
     }
 
     ready() {
