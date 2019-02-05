@@ -42,7 +42,7 @@ class Las2peerUserlistWidget extends PolymerElement {
             },
             loggedIn: {
                 type: Boolean,
-                computed: '_computeLogin(loginName,loginPassword)'
+                computed: '_computeLogin(loginName)'
             },
             loginName: {
                 type: String,
@@ -84,11 +84,8 @@ class Las2peerUserlistWidget extends PolymerElement {
         this.response.apply(this, arguments);
     }
 
-    _computeLogin(loginName,loginPassword) {
-        if (loginName != null && loginPassword != null)
-            return true;
-
-        return false;
+    _computeLogin(loginName) {
+        return (loginName != null);
     }
 
     ready() {

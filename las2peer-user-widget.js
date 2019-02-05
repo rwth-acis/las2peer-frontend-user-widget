@@ -737,7 +737,7 @@ class Las2peerUserWidget extends PolymerElement {
             },
             loggedIn: {
                 type: Boolean,
-                computed: '_computeLogin(loginName,loginPassword)'
+                computed: '_computeLogin(loginName)'
             },
             loginName: {
                 type: String,
@@ -850,18 +850,12 @@ class Las2peerUserWidget extends PolymerElement {
         }
     }
 
-    _computeLogin(loginName,loginPassword) {
-        if (loginName != null && loginPassword != null)
-            return true;
-        return false;
+    _computeLogin(loginName) {
+        return (loginName != null);
     }
 
     _computeName(loginName){
-      if(loginName != null){
-        return loginName;
-      }else{
         return ""+Math.random().toString(36).substring(7);
-      }
     }
 
     ready() {
@@ -974,7 +968,6 @@ class Las2peerUserWidget extends PolymerElement {
 
     contactRemoved(event) {
         this.removeUser('contacts', this.contactToRemove);
-        this.$.itemsList.notifyResize();
         this.contacts.sort(function(a, b) {
             if (a.toLowerCase() < b.toLowerCase()) return -1;
             if (a.toLowerCase() > b.toLowerCase()) return 1;
