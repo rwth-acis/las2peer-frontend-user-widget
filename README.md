@@ -6,7 +6,7 @@ A polymer widget which uses the las2peer Contact and UserInformation Service
 
 1. Add this line to your package.json
 ```
-"las2peer-frontend-user-widget": "github:rwth-acis/las2peer-frontend-user-widget#polymer3.0"
+"las2peer-frontend-user-widget": "github:rwth-acis/las2peer-frontend-user-widget"
 ```
 2. Import to your source code
 ```

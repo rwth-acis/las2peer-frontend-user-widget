@@ -429,6 +429,7 @@ class Las2peerUserWidget extends PolymerElement {
             <!-- for now the widget drops down regardless whether a valid login is detected -->
             <!-- until I find a proper solution for detecting a valid login -->
           <!-- <template is="dom-if" if="{{loggedIn}}"> -->
+            <div slot="dropdown-content" hidden$="[[!loggedIn]]">
               <ul class="dropdown-content" slot="dropdown-content" tabindex="0">
                   <li><a href="javascript:void(0)" on-click="_editProfile">Edit profile</a>
                   </li>
@@ -441,6 +442,7 @@ class Las2peerUserWidget extends PolymerElement {
                   <li><a href="javascript:void(0)" on-click="_addressbook">Addressbook</a>
                   </li>
               </ul>
+            </div>
           <!-- </template> -->
         </iron-dropdown>
         <paper-toast id="errorToast" class="fit-bottom" text=""></paper-toast>
