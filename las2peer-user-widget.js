@@ -441,6 +441,8 @@ class Las2peerUserWidget extends PolymerElement {
                   </li>
                   <li><a href="javascript:void(0)" on-click="_addressbook">Addressbook</a>
                   </li>
+                  <li><a href="javascript:void(0)" on-click="_logout">Logout</a>
+                  </li>
               </ul>
             </div>
           <!-- </template> -->
@@ -771,11 +773,11 @@ class Las2peerUserWidget extends PolymerElement {
     _computeHeaders(loginName, loginPassword, loginOidcToken, loginOidcProvider) {
         var headers = {};
 
-        if (loginName != null && loginPassword != null) {
+        if (loginName != null && loginName.length && loginPassword != null && loginPassword.length) {
             headers["Authorization"] = "Basic " + btoa(loginName + ":" + loginPassword);
-        } else if (loginOidcToken != null) {
+        } else if (loginOidcToken != null && loginOidcToken.length) {
             headers["access_token"] = loginOidcToken;
-            if (loginOidcProvider != null) {
+            if (loginOidcProvider != null && loginOidcProvider.length) {
                 headers["oidc_provider"] = loginOidcProvider;
             }
         }
@@ -866,9 +868,9 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     _computeLogin(loginName, loginOidcToken, loginOidcProvider) {
-        if (loginName != null) {
+        if (loginName != null && loginName.length) {
             return true;
-        } else if (loginOidcToken != null && loginOidcProvider != null && loginOidcToken != "undefined") {
+        } else if (loginOidcToken != null && loginOidcToken.length && loginOidcProvider != null && loginOidcProvider.length) {
             return true;
         }
         return false;
@@ -943,7 +945,7 @@ class Las2peerUserWidget extends PolymerElement {
             this.contact = contactlist[keys[i]];
             this.$.ajaxContactInformation.generateRequest();
         }
-        if (this.loginName != null){
+        if (this.loginName != null && this.loginName.length){
             if (this.addressbookContacts.indexOf(this.loginName) > -1) {
               this.appearInAdressbook = true;
               this.$.appearInAdressbook.setAttribute('checked', this.appearInAdressbook);
@@ -1125,6 +1127,7 @@ class Las2peerUserWidget extends PolymerElement {
           this.shadowRoot.querySelector("#preview").style.backgroundImage = "url(" + this.baseUrl + "/fileservice/files/" + this.userImage + ")";
         }
         console.log(this.firstName + " " + this.lastName + ", " + this.userImage);
+        this.dispatchEvent(new CustomEvent('signed-in', {bubbles: true}));
     }
 
     _updatedUserInformation(event) {
@@ -1164,13 +1167,22 @@ class Las2peerUserWidget extends PolymerElement {
         this.$.ajaxUpdateAvatar.generateRequest();
     }
 
-    _updateAvatar(event){
+    _updateAvatar(event) {
         this.userImage = event.detail.response;
         this.$.userImage.setAttribute('value', this.userImage);
         if(this.userImage.length>0){
           this.shadowRoot.querySelector("#dropdown-button").style.backgroundImage = "url(" + this.baseUrl + "/fileservice/files/" + this.userImage + ")";
           this.shadowRoot.querySelector("#preview").style.backgroundImage = "url(" + this.baseUrl + "/fileservice/files/" + this.userImage + ")";
         }
+    }
+
+    _logout(event) {
+        this.loginName = null;
+        this.loginPassword = null;
+        this.loginOidcToken = null;
+        this.loginOidcProvider = null;
+        this.shadowRoot.querySelector("#dropdown-button").style.backgroundImage = "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png)";
+        this.dispatchEvent(new CustomEvent('signed-out', {bubbles: true}));
     }
 
     _handleError(event) {
