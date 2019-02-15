@@ -1,6 +1,6 @@
 {
     "name": "las2peer-frontend-user-widget",
-    "version": "0.1.2",
+    "version": "0.1.1",
     "description": "A polymer widget which uses the las2peer Contact and UserInformation Service",
     "main": "las2peer-user-widget.js",
     "dependencies": {
