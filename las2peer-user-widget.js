@@ -661,7 +661,7 @@ class Las2peerUserWidget extends PolymerElement {
             data: Object,
             baseUrl: {
                 type: String,
-                value: 'https://las2peer.dbis.rwth-aachen.de:9098',
+                value: null,
             },
             hover: {
                 type: Boolean,
@@ -1127,7 +1127,7 @@ class Las2peerUserWidget extends PolymerElement {
           this.shadowRoot.querySelector("#preview").style.backgroundImage = "url(" + this.baseUrl + "/fileservice/files/" + this.userImage + ")";
         }
         console.log(this.firstName + " " + this.lastName + ", " + this.userImage);
-        this.dispatchEvent(new CustomEvent('signed-in', {bubbles: true}));
+        this.dispatchEvent(new CustomEvent('signed-in'));
     }
 
     _updatedUserInformation(event) {
