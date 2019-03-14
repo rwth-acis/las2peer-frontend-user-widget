@@ -741,7 +741,7 @@ class Las2peerUserWidget extends PolymerElement {
             },
             loggedIn: {
                 type: Boolean,
-                computed: '_computeLogin(loginName,loginOidcToken,loginOidcProvider)'
+                computed: '_computeLogin(loginName,loginOidcToken,loginOidcProvider,loginOidcSub)'
             },
             loginName: {
                 type: String,
@@ -759,9 +759,13 @@ class Las2peerUserWidget extends PolymerElement {
                 type: String,
                 value: null
             },
+            loginOidcSub: {
+                type: String,
+                value: null
+            },
             _requestHeaders: {
                 type: Object,
-                computed: '_computeHeaders(loginName,loginPassword,loginOidcToken,loginOidcProvider)'
+                computed: '_computeHeaders(loginName,loginPassword,loginOidcToken,loginOidcProvider,loginOidcSub)'
             },
             sendCookie: {
                 type: Boolean,
@@ -770,7 +774,7 @@ class Las2peerUserWidget extends PolymerElement {
         }
     }
 
-    _computeHeaders(loginName, loginPassword, loginOidcToken, loginOidcProvider) {
+    _computeHeaders(loginName, loginPassword, loginOidcToken, loginOidcProvider, loginOidcSub) {
         var headers = {};
 
         if (loginName != null && loginName.length && loginPassword != null && loginPassword.length) {
@@ -779,6 +783,9 @@ class Las2peerUserWidget extends PolymerElement {
             headers["access_token"] = loginOidcToken;
             if (loginOidcProvider != null && loginOidcProvider.length) {
                 headers["oidc_provider"] = loginOidcProvider;
+            }
+            if (loginOidcSub != null && loginOidcSub.length) {
+                headers["Authorization"] = "Basic " + btoa("OIDC_SUB-:" + loginOidcSub)
             }
         }
         return headers;
@@ -867,10 +874,10 @@ class Las2peerUserWidget extends PolymerElement {
         }
     }
 
-    _computeLogin(loginName, loginOidcToken, loginOidcProvider) {
+    _computeLogin(loginName, loginOidcToken, loginOidcProvider, loginOidcSub) {
         if (loginName != null && loginName.length) {
             return true;
-        } else if (loginOidcToken != null && loginOidcToken.length && loginOidcProvider != null && loginOidcProvider.length) {
+        } else if (loginOidcToken != null && loginOidcToken.length && loginOidcProvider != null && loginOidcProvider.length && loginOidcSub != null && loginOidcSub.length) {
             return true;
         }
         return false;
@@ -1181,6 +1188,7 @@ class Las2peerUserWidget extends PolymerElement {
         this.loginPassword = null;
         this.loginOidcToken = null;
         this.loginOidcProvider = null;
+        this.loginOidcSub = null;
         this.shadowRoot.querySelector("#dropdown-button").style.backgroundImage = "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png)";
         this.dispatchEvent(new CustomEvent('signed-out', {bubbles: true}));
     }
