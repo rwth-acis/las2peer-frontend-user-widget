@@ -71,7 +71,7 @@ class Las2peerUserWidget extends PolymerElement {
                 -moz-border-radius: 20px;
                 background-image: url('https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png');
                 background-size: 100% 100%;
-                background-color: rgba(0, 0, 0, 0);
+                background-color: var(--user-widget-button-background, rgba(0, 0, 0, 0));
                 box-shadow: 0 0 8px rgba(0, 0, 0, .8);
                 -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
                 -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);

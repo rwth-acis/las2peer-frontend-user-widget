@@ -31,3 +31,11 @@ The project includes a demo which can be run locally by running `npm i` and `pol
                 >`document.getElementsByClassName("CLASS")` becomes `this.shadowRoot.querySelector("#CLASS")
 	>Outsourced triggering of click event on file input from paper-button to '_uploadAvatarFile' function
         >Added authorization based on session cookie which is enabled by the `send-cookie` attribute
+
+## Theming
+
+Set the following CSS variables to change the default appearance.
+
+| CSS Variable                    | Description                                                           | Default          |
+|---------------------------------|-----------------------------------------------------------------------|------------------|
+| --user-widget-button-background | Set the *background-color* property of the *dropdown-button* element. | rgba(0, 0, 0, 0) |
