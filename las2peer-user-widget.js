@@ -1191,6 +1191,7 @@ class Las2peerUserWidget extends PolymerElement {
         this.loginOidcSub = null;
         this.shadowRoot.querySelector("#dropdown-button").style.backgroundImage = "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png)";
         this.dispatchEvent(new CustomEvent('signed-out', {bubbles: true}));
+        event.stopPropagation();
     }
 
     _handleError(event) {
