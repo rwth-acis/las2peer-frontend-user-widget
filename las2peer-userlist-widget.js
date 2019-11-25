@@ -77,7 +77,7 @@ class Las2peerUserlistWidget extends PolymerElement {
         if (loginName != null && loginPassword != null) {
             headers["Authorization"] = "Basic " + btoa(loginName + ":" + loginPassword);
         } else if (loginOidcToken != null) {
-            headers["access_token"] = loginOidcToken;
+            headers["access-token"] = loginOidcToken;
             if (loginOidcProvider != null) {
                 headers["oidc_provider"] = loginOidcProvider;
             }
