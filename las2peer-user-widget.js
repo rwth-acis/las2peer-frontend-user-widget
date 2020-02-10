@@ -72,10 +72,20 @@ class Las2peerUserWidget extends PolymerElement {
                 background-image: url('https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png');
                 background-size: 100% 100%;
                 background-color: var(--user-widget-button-background, rgba(0, 0, 0, 0));
-                box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-                -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-                -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+                box-shadow: 0 0 6px rgba(0, 0, 0, .6);
+                -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, .6);
+                -moz-box-shadow: 0 0 6px rgba(0, 0, 0, .6);
+                position: relative;
+                border: 1px solid white;
             }
+
+            #dropdown-button:hover {
+                cursor: pointer;
+                box-shadow: 0 0 12px rgba(0, 0, 0, 0.9);
+                -webkit-box-shadow: 0 0 12px rgba(0, 0, 0, .9);
+                -moz-box-shadow: 0 0 12px rgba(0, 0, 0, .9);
+            }
+
             paper-toggle-button.green {
                 --paper-toggle-button-checked-bar-color: var(--paper-green-500);
                 --paper-toggle-button-checked-button-color: var(--paper-green-500);
