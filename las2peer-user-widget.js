@@ -69,7 +69,7 @@ class Las2peerUserWidget extends PolymerElement {
                 border-radius: 20px;
                 -webkit-border-radius: 20px;
                 -moz-border-radius: 20px;
-                background-image: url('https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png');
+                background-image: url('https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/master/logo.png');
                 background-size: 100% 100%;
                 background-color: var(--user-widget-button-background, rgba(0, 0, 0, 0));
                 box-shadow: 0 0 6px rgba(0, 0, 0, .6);
@@ -138,7 +138,7 @@ class Las2peerUserWidget extends PolymerElement {
                 border-radius: 20px;
                 box-sizing: border-box;
                 background-color: #ddd;
-                background-image: url('https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png');
+                background-image: url('https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/master/logo.png');
             }
             #itemsList,
             #selectedItemsList {
@@ -1098,7 +1098,7 @@ class Las2peerUserWidget extends PolymerElement {
             imgUrl = jsonObject["userImage"];
         }
         //$('#img'+currentUser).css("background-image", "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png)");
-        var imgUrl_css = "https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png";
+        var imgUrl_css = "https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/master/logo.png";
         if (imgUrl.length > 1)
             imgUrl_css = this.baseUrl + "/fileservice/files/" + imgUrl;
         let usrAvatar = this.shadowRoot.querySelector("#img" + currentUser);
@@ -1199,7 +1199,7 @@ class Las2peerUserWidget extends PolymerElement {
         this.loginOidcToken = null;
         this.loginOidcProvider = null;
         this.loginOidcSub = null;
-        this.shadowRoot.querySelector("#dropdown-button").style.backgroundImage = "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/polymer3.0/logo.png)";
+        this.shadowRoot.querySelector("#dropdown-button").style.backgroundImage = "url(https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/master/logo.png)";
         this.dispatchEvent(new CustomEvent('signed-out', {bubbles: true}));
         event.stopPropagation();
     }
