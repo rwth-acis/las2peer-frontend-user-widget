@@ -1214,7 +1214,7 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     _contactAddError(event) {
-        if (!suppressErrorToast) {
+        if (!this.suppressErrorToast) {
             this.$.errorToast.show({
                 text: 'Contact could not be added. ' + event.detail.request.xhr.response,
                 duration: 2500
@@ -1223,7 +1223,7 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     _addressbookError(event) {
-        if (suppressErrorToast) {
+        if (!this.suppressErrorToast) {
             this.$.errorToast.show({
                 text: 'Addressbook: ' + event.detail.request.xhr.response,
                 duration: 2500
