@@ -780,6 +780,10 @@ class Las2peerUserWidget extends PolymerElement {
             sendCookie: {
                 type: Boolean,
                 value: false
+            },
+            suppressErrorToast: {
+                type: Boolean,
+                value: false
             }
         }
     }
@@ -1210,17 +1214,21 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     _contactAddError(event) {
-        this.$.errorToast.show({
-            text: 'Contact could not be added. ' + event.detail.request.xhr.response,
-            duration: 2500
-        });
+        if (!suppressErrorToast) {
+            this.$.errorToast.show({
+                text: 'Contact could not be added. ' + event.detail.request.xhr.response,
+                duration: 2500
+            });
+        }
     }
 
     _addressbookError(event) {
-        this.$.errorToast.show({
-            text: 'Addressbook: ' + event.detail.request.xhr.response,
-            duration: 2500
-        });
+        if (suppressErrorToast) {
+            this.$.errorToast.show({
+                text: 'Addressbook: ' + event.detail.request.xhr.response,
+                duration: 2500
+            });
+        }
     }
 
     _isNull(val) {
