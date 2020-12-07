@@ -1028,8 +1028,10 @@ class Las2peerUserWidget extends PolymerElement {
         }
         if (keys > 0) {
             if (this.$.groupSelect.value.length > 0) {
+              console.log("list2");
                 this._updateGroupMemberlist2();
             } else {
+              console.log("list1");
                 this.group = res[keys[0]];
                 this.$.ajaxGetGroupMember.generateRequest();
             }
