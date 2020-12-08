@@ -1026,6 +1026,7 @@ class Las2peerUserWidget extends PolymerElement {
         for (var i = 0; i < keys.length; i++) {
             this.addUser('groups', res[keys[i]]);
         }
+            this.addUser('groups', "res[keys[i]]");
         if (keys > 0) {
             if (this.$.groupSelect.value.length > 0) {
               console.log("list2");
@@ -1048,6 +1049,7 @@ class Las2peerUserWidget extends PolymerElement {
         for (var i = 0; i < keys.length; i++) {
             this.addUser("contactsCanAdd", this.contacts[keys[i]]);
         }
+         this.addUser("contactsCanAdd", "this.contacts[keys[i]]");
         keys = Object.keys(res);
         for (var i = 0; i < keys.kength; i++) {
             this.addUser('groupMember', res[keys[i]]);
