@@ -1034,11 +1034,13 @@ class Las2peerUserWidget extends PolymerElement {
               console.log("list1");
                 this.group = res[keys[0]];
                 this.$.ajaxGetGroupMember.generateRequest();
+                this._updateGroupMemberlist2();
             }
         }
     }
 
     _updateGroupMemberlist(event) {
+      console.log("_updateGroupMemberlist");
         var res = event.detail.response;
         this.groupMember = [];
         this.contactsCanAdd = [];
@@ -1061,6 +1063,7 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     _updateGroupMemberlist2(event) {
+      console.log("_updateGroupMemberlist2");
         this.group = this.$.groupSelect.value;
         this.$.ajaxGetGroupMember.generateRequest();
     }
