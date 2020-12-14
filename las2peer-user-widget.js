@@ -651,6 +651,27 @@ class Las2peerUserWidget extends PolymerElement {
                     </tr>
                 </table>
             </div>
+                        <div>
+                <table>
+                    <tr>
+                        <td>Remove Group Members:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select class="form-control" id="memberSelect2" style="width:150px">
+                                <template is="dom-repeat" items="[[groupMember]]">
+                                    <option value="{{item}}">{{item}}</option>
+                                </template>
+                            </select>
+                        </td>
+                        <td>
+                            <paper-button raised on-click="removeGroupMember" class="green">
+                                <iron-icon icon="remove"></iron-icon>Remove</paper-button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <div class="buttons">
                 <paper-button dialog-dismiss>Close</paper-button>
             </div>
