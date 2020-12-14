@@ -423,6 +423,18 @@ class Las2peerUserWidget extends PolymerElement {
             </iron-ajax>
 
             <iron-ajax
+              id="ajaxGetGroupId"
+              url='[[baseUrl]]/contactservice/groups/[[group]]/id'
+              method='GET'
+              params='{}'
+              handle-as="json"
+              on-response="_handleId"
+              on-error="_handleError"
+              headers='[[_requestHeaders]]'
+              content-type='text/plain'>
+            </iron-ajax>
+
+            <iron-ajax
                id="ajaxUpdateAvatar"
                url = '[[baseUrl]]/fileservice/files'
                method="POST"
@@ -614,6 +626,7 @@ class Las2peerUserWidget extends PolymerElement {
                                 </div>
                             </template>
                         </iron-list>
+                        <button style="font-size:20px" on-click="_getGroupId" >Copy Group ID to Clipboard<i class="fa fa-clipboard"></i></button>
                     </div>
                 </paper-dialog-scrollable>
             </p>
@@ -995,6 +1008,25 @@ class Las2peerUserWidget extends PolymerElement {
         });
     }
 
+    _getGroupId(){
+      this.$.ajaxGetGroupId.generateRequest();
+    }
+
+    _handleId(event){
+      var res = event.detail.response;
+      console.log(res);
+      console.log(res.groupId);
+      var groupId = res.groupId;
+      var textArea = document.createElement("textarea");
+
+      textArea.value = groupId;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+
+    }
+
     addGroupMember(event, detail) {
         var gm = this.$.memberSelect.value;
         var g = this.$.groupSelect.value;
@@ -1019,23 +1051,23 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     _updateGroups(event) {
+      console.log("_updateGroupMemberlisdsdsdds");
         var res = event.detail.response;
         this.groups = [];
         let keys = Object.keys(res);
 
         for (var i = 0; i < keys.length; i++) {
+            console.log("jkey " + i);
             this.addUser('groups', res[keys[i]]);
         }
         if (keys.length > 0) {
             if (this.$.groupSelect.value.length > 0) {
-              console.log("list2");
                 this._updateGroupMemberlist2();
             } else {
-              console.log("list1");
                 this.group = res[keys[0]];
                 this.$.ajaxGetGroupMember.generateRequest();
             }
-        }
+        } 
     }
 
     _updateGroupMemberlist(event) {
