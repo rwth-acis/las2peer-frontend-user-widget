@@ -1087,8 +1087,6 @@ class Las2peerUserWidget extends PolymerElement {
         for (var i = 0; i < keys.length; i++) {
             this.addUser('groupMember', res[keys[i]]);
             this.removeUserCanAdd('contactsCanAdd', res[keys[i]]);
-            this.addUser('groupMember', res[keys[i]]);
-            console.log("is in ghroup " +res[keys[i]]);
             //this.contact = res[member];
             //this.$.ajaxContactInformation.generateRequest();
         }
