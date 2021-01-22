@@ -653,23 +653,6 @@ class Las2peerUserWidget extends PolymerElement {
             </div>
                         <div>
                 <table>
-                    <tr>
-                        <td>Remove Group Members:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <select class="form-control" id="memberSelect2" style="width:150px">
-                                <template is="dom-repeat" items="[[groupMember]]">
-                                    <option value="{{item}}">{{item}}</option>
-                                </template>
-                            </select>
-                        </td>
-                        <td>
-                            <paper-button raised on-click="removeGroupMember" class="green">
-                                <iron-icon icon="remove"></iron-icon>Remove</paper-button>
-                        </td>
-                    </tr>
                 </table>
             </div>
             <div class="buttons">
@@ -1101,9 +1084,11 @@ class Las2peerUserWidget extends PolymerElement {
             this.addUser("contactsCanAdd", this.contacts[keys[i]]);
         }
         keys = Object.keys(res);
-        for (var i = 0; i < keys.kength; i++) {
+        for (var i = 0; i < keys.length; i++) {
             this.addUser('groupMember', res[keys[i]]);
             this.removeUserCanAdd('contactsCanAdd', res[keys[i]]);
+            this.addUser('groupMember', res[keys[i]]);
+            console.log("is in ghroup " +res[keys[i]]);
             //this.contact = res[member];
             //this.$.ajaxContactInformation.generateRequest();
         }
@@ -1122,6 +1107,7 @@ class Las2peerUserWidget extends PolymerElement {
 
     _groupAdded(event) {
         this.addUser('groups', this.group);
+       this._updateGroupMemberlist(event); 
     }
 
     _memberAdded(event) {
