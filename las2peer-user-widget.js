@@ -988,14 +988,15 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     removeContact(event, detail) {
-        this.contactToRemove = event.path[2].id + "";
+        this.contactToRemove = event.model.__data.item;
         console.log("Removing " + this.contactToRemove + " from your contact list");
         this.$.ajaxRemoveContact.generateRequest();
         delete this.contacts[this.contactToRemove];
     }
 
     removeGroupMember(event, detail) {
-        this.contact = event.path[1].id + "";
+        this.contact = event.model.__data.item;
+        console.log(this.contact);
         this.group = this.$.groupSelect.value;
         this.$.ajaxRemoveGroupMember.generateRequest();
     }
