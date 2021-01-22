@@ -606,6 +606,10 @@ class Las2peerUserWidget extends PolymerElement {
                                     <option value="{{item}}">{{item}}</option>
                                 </template>
                             </select>
+                            <td>
+                            <paper-button raised on-click="_getGroupId" class="black">
+                                <iron-icon icon="content-paste"></iron-icon>Copy Id</paper-button>
+                            </td>
 
                         </td>
                         <td></td>
@@ -626,7 +630,6 @@ class Las2peerUserWidget extends PolymerElement {
                                 </div>
                             </template>
                         </iron-list>
-                        <button style="font-size:20px" on-click="_getGroupId" >Copy Group ID to Clipboard<i class="fa fa-clipboard"></i></button>
                     </div>
                 </paper-dialog-scrollable>
             </p>
