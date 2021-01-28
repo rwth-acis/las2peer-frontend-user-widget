@@ -1109,7 +1109,7 @@ class Las2peerUserWidget extends PolymerElement {
 
     _groupAdded(event) {
         this.addUser('groups', this.group);
-       this._updateGroupMemberlist(event); 
+       this._updateGroupMemberlist2(event); 
     }
 
     _memberAdded(event) {
