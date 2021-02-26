@@ -753,6 +753,10 @@ class Las2peerUserWidget extends PolymerElement {
                 type: String,
                 value: null
             },
+            addedGroup:{
+                type: String,
+                value: null
+            },
             group: {
                 type: String,
                 value: null
@@ -1094,6 +1098,10 @@ class Las2peerUserWidget extends PolymerElement {
             //this.contact = res[member];
             //this.$.ajaxContactInformation.generateRequest();
         }
+        if(this.addedGroup != null){
+            this.$.groupSelect.value = this.addedGroup;
+            this.addedGroup = null;
+        }
         this.groupMember.sort(function(a, b) {
             if (a.toLowerCase() < b.toLowerCase()) return -1;
             if (a.toLowerCase() > b.toLowerCase()) return 1;
@@ -1103,13 +1111,17 @@ class Las2peerUserWidget extends PolymerElement {
 
     _updateGroupMemberlist2(event) {
       console.log("_updateGroupMemberlist2");
-        this.group = this.$.groupSelect.value;
+        if(this.addedGroup == null){
+            this.group = this.$.groupSelect.value;
+        } else this.group = this.addedGroup;
         this.$.ajaxGetGroupMember.generateRequest();
     }
 
+
     _groupAdded(event) {
         this.addUser('groups', this.group);
-       this._updateGroupMemberlist2(event); 
+        this.addedGroup = this.group;
+        this._updateGroupMemberlist2(event); 
     }
 
     _memberAdded(event) {
