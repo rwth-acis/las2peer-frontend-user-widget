@@ -810,7 +810,6 @@ class Las2peerUserWidget extends PolymerElement {
 
     _computeHeaders(loginName, loginPassword, loginOidcToken, loginOidcProvider, loginOidcSub) {
         var headers = {};
-
         if (loginName != null && loginName.length && loginPassword != null && loginPassword.length) {
             headers["Authorization"] = "Basic " + btoa(loginName + ":" + loginPassword);
         } else if (loginOidcToken != null && loginOidcToken.length) {
@@ -1003,7 +1002,6 @@ class Las2peerUserWidget extends PolymerElement {
 
     removeGroupMember(event, detail) {
         this.contact = event.model.__data.item;
-        console.log(this.contact);
         this.group = this.$.groupSelect.value;
         this.$.ajaxRemoveGroupMember.generateRequest();
     }
@@ -1026,8 +1024,6 @@ class Las2peerUserWidget extends PolymerElement {
 
     _handleId(event){
       var res = event.detail.response;
-      console.log(res);
-      console.log(res.groupId);
       var groupId = res.groupId;
       var textArea = document.createElement("textarea");
 
@@ -1063,13 +1059,11 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     _updateGroups(event) {
-      console.log("_updateGroupMemberlisdsdsdds");
         var res = event.detail.response;
         this.groups = [];
         let keys = Object.keys(res);
 
         for (var i = 0; i < keys.length; i++) {
-            console.log("jkey " + i);
             this.addUser('groups', res[keys[i]]);
         }
         if (keys.length > 0) {
@@ -1083,7 +1077,6 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     _updateGroupMemberlist(event) {
-      console.log("_updateGroupMemberlist");
         var res = event.detail.response;
         this.groupMember = [];
         this.contactsCanAdd = [];
@@ -1110,7 +1103,6 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     _updateGroupMemberlist2(event) {
-      console.log("_updateGroupMemberlist2");
         if(this.addedGroup == null){
             this.group = this.$.groupSelect.value;
         } else this.group = this.addedGroup;
