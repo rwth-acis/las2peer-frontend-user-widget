@@ -423,6 +423,18 @@ class Las2peerUserWidget extends PolymerElement {
             </iron-ajax>
 
             <iron-ajax
+              id="ajaxGetGroupId"
+              url='[[baseUrl]]/contactservice/groups/[[group]]/id'
+              method='GET'
+              params='{}'
+              handle-as="json"
+              on-response="_handleId"
+              on-error="_handleError"
+              headers='[[_requestHeaders]]'
+              content-type='text/plain'>
+            </iron-ajax>
+
+            <iron-ajax
                id="ajaxUpdateAvatar"
                url = '[[baseUrl]]/fileservice/files'
                method="POST"
@@ -594,6 +606,10 @@ class Las2peerUserWidget extends PolymerElement {
                                     <option value="{{item}}">{{item}}</option>
                                 </template>
                             </select>
+                            <td>
+                            <paper-button raised on-click="_getGroupId" class="black">
+                                <iron-icon icon="content-paste"></iron-icon>Copy Id</paper-button>
+                            </td>
 
                         </td>
                         <td></td>
@@ -636,6 +652,10 @@ class Las2peerUserWidget extends PolymerElement {
                                 <iron-icon icon="add"></iron-icon>Add</paper-button>
                         </td>
                     </tr>
+                </table>
+            </div>
+                        <div>
+                <table>
                 </table>
             </div>
             <div class="buttons">
@@ -730,6 +750,10 @@ class Las2peerUserWidget extends PolymerElement {
                 value: []
             },
             contact: {
+                type: String,
+                value: null
+            },
+            addedGroup:{
                 type: String,
                 value: null
             },
@@ -971,14 +995,14 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     removeContact(event, detail) {
-        this.contactToRemove = event.path[2].id + "";
+        this.contactToRemove = event.model.__data.item;
         console.log("Removing " + this.contactToRemove + " from your contact list");
         this.$.ajaxRemoveContact.generateRequest();
         delete this.contacts[this.contactToRemove];
     }
 
     removeGroupMember(event, detail) {
-        this.contact = event.path[1].id + "";
+        this.contact = event.model.__data.item;
         this.group = this.$.groupSelect.value;
         this.$.ajaxRemoveGroupMember.generateRequest();
     }
@@ -993,6 +1017,23 @@ class Las2peerUserWidget extends PolymerElement {
             if (a.toLowerCase() > b.toLowerCase()) return 1;
             return 0;
         });
+    }
+
+    _getGroupId(){
+      this.$.ajaxGetGroupId.generateRequest();
+    }
+
+    _handleId(event){
+      var res = event.detail.response;
+      var groupId = res.groupId;
+      var textArea = document.createElement("textarea");
+
+      textArea.value = groupId;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+
     }
 
     addGroupMember(event, detail) {
@@ -1026,14 +1067,14 @@ class Las2peerUserWidget extends PolymerElement {
         for (var i = 0; i < keys.length; i++) {
             this.addUser('groups', res[keys[i]]);
         }
-        if (keys > 0) {
+        if (keys.length > 0) {
             if (this.$.groupSelect.value.length > 0) {
                 this._updateGroupMemberlist2();
             } else {
                 this.group = res[keys[0]];
                 this.$.ajaxGetGroupMember.generateRequest();
             }
-        }
+        } 
     }
 
     _updateGroupMemberlist(event) {
@@ -1045,11 +1086,15 @@ class Las2peerUserWidget extends PolymerElement {
             this.addUser("contactsCanAdd", this.contacts[keys[i]]);
         }
         keys = Object.keys(res);
-        for (var i = 0; i < keys.kength; i++) {
+        for (var i = 0; i < keys.length; i++) {
             this.addUser('groupMember', res[keys[i]]);
             this.removeUserCanAdd('contactsCanAdd', res[keys[i]]);
             //this.contact = res[member];
             //this.$.ajaxContactInformation.generateRequest();
+        }
+        if(this.addedGroup != null){
+            this.$.groupSelect.value = this.addedGroup;
+            this.addedGroup = null;
         }
         this.groupMember.sort(function(a, b) {
             if (a.toLowerCase() < b.toLowerCase()) return -1;
@@ -1059,12 +1104,17 @@ class Las2peerUserWidget extends PolymerElement {
     }
 
     _updateGroupMemberlist2(event) {
-        this.group = this.$.groupSelect.value;
+        if(this.addedGroup == null){
+            this.group = this.$.groupSelect.value;
+        } else this.group = this.addedGroup;
         this.$.ajaxGetGroupMember.generateRequest();
     }
 
+
     _groupAdded(event) {
         this.addUser('groups', this.group);
+        this.addedGroup = this.group;
+        this._updateGroupMemberlist2(event); 
     }
 
     _memberAdded(event) {
