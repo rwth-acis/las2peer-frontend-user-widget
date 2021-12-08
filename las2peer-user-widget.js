@@ -36,6 +36,7 @@ class Las2peerUserWidget extends PolymerElement {
         <style>
             :host {
                 margin-left: 10px;
+                margin-right: 10px;
             }
             button {
                 border: 0px;
