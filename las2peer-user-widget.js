@@ -36,6 +36,7 @@ class Las2peerUserWidget extends PolymerElement {
         <style>
             :host {
                 margin-left: 10px;
+                margin-right: 10px;
             }
             button {
                 border: 0px;
@@ -62,8 +63,7 @@ class Las2peerUserWidget extends PolymerElement {
                 margin-top: 42px;
                 z-index: 5000;
             }
-            #dropdown-button {
-                margin-top: -5px;
+            #dropdown-button {              
                 width: 40px;
                 height: 40px;
                 border-radius: 20px;
