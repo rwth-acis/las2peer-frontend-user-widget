@@ -69,7 +69,7 @@ class Las2peerUserWidget extends PolymerElement {
                 border-radius: 20px;
                 -webkit-border-radius: 20px;
                 -moz-border-radius: 20px;
-                background-image: url('https://raw.githubusercontent.com/rwth-acis/las2peer-frontend-user-widget/master/logo.png');
+                background-image: url('http://results.learning-layers.eu/images/learning-layers.svg');
                 background-size: 100% 100%;
                 background-color: var(--user-widget-button-background, rgba(0, 0, 0, 0));
                 box-shadow: 0 0 6px rgba(0, 0, 0, .6);
