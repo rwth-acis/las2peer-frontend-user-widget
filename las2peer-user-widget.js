@@ -1000,7 +1000,6 @@ class Las2peerUserWidget extends PolymerElement {
 
     removeContact(event, detail) {
         this.contactToRemove = event.model.__data.item;
-        console.log("Removing " + this.contactToRemove + " from your contact list");
         this.$.ajaxRemoveContact.generateRequest();
         delete this.contacts[this.contactToRemove];
     }
@@ -1197,7 +1196,6 @@ class Las2peerUserWidget extends PolymerElement {
           this.shadowRoot.querySelector("#dropdown-button").style.backgroundImage = "url(" + this.baseUrl + "/fileservice/files/" + this.userImage + ")";
           this.shadowRoot.querySelector("#preview").style.backgroundImage = "url(" + this.baseUrl + "/fileservice/files/" + this.userImage + ")";
         }
-        console.log(this.firstName + " " + this.lastName + ", " + this.userImage);
         this.dispatchEvent(new CustomEvent('signed-in'));
     }
 
@@ -1263,7 +1261,9 @@ class Las2peerUserWidget extends PolymerElement {
 
     _handleError(event) {
         //alert(event.target.lastResponse);
-        console.log(event.detail.error.message + " " + event.detail.request.url);
+        console.error(
+          event.detail.error.message + " " + event.detail.request.url
+        );
     }
 
     _contactAddError(event) {
