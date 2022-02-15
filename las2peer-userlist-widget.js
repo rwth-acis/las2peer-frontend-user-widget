@@ -138,7 +138,7 @@ class Las2peerUserlistWidget extends PolymerElement {
 
     _handleError(event) {
         //alert(event.target.lastResponse);
-        console.log(event._);
+        console.error(event._);
     }
 
     _isNull(val) {
